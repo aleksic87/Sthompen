@@ -84,7 +84,7 @@
     "type": "function",
     "z": "98edc158.ad053",
     "name": "led",
-    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\")};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
+    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
     "outputs": "1",
     "noerr": 0,
     "x": 255,
@@ -276,7 +276,7 @@
     "id": "44dee912.b7d6e8",
     "type": "exec",
     "z": "98edc158.ad053",
-    "command": "tdtool --on 333",
+    "command": "tdtool --on 111",
     "addpay": true,
     "append": "",
     "useSpawn": "",
@@ -294,7 +294,7 @@
     "id": "c9045fb9.e8b6c",
     "type": "exec",
     "z": "98edc158.ad053",
-    "command": "tdtool --off 333",
+    "command": "tdtool --off 111",
     "addpay": true,
     "append": "",
     "useSpawn": "",
@@ -319,7 +319,9 @@
     "x": 255,
     "y": 656,
     "wires": [
-      []
+      [
+        "97a498e8.852618"
+      ]
     ]
   },
   {
@@ -466,7 +468,7 @@
     "type": "function",
     "z": "98edc158.ad053",
     "name": "liveUpdateLeds",
-    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\")};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
+    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
     "outputs": 1,
     "noerr": 0,
     "x": 525,
@@ -546,7 +548,7 @@
     "type": "function",
     "z": "98edc158.ad053",
     "name": "tempSensor",
-    "func": "var payload = msg.payload;\nvar indexIn = payload.search(\"id=247\");\nvar indexOut = payload.search(\"id=248\");\nvar inside = payload.substring(indexIn);\nvar outside = payload.substring(indexOut);\nvar insideTextIndex = inside.search(\"temperature=\");\nvar insideText = inside.substring(insideTextIndex+12,insideTextIndex+16);\nvar outsideTextIndex = inside.search(\"temperature=\");\nvar outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+16);\nvar humidityTextIndex = inside.search(\"humidity=\");\nvar humidityText = inside.substring(humidityTextIndex+9,humidityTextIndex+11);\n\nvar newPayload = {\n    inside: insideText,\n    outside: outsideText,\n    humidity: humidityText\n}\n\nmsg.payload = newPayload;\nreturn msg;",
+    "func": "var payload = msg.payload;\nvar indexIn = payload.search(\"id=247\");\nvar indexOut = payload.search(\"id=248\");\nvar inside = payload.substring(indexIn);\nvar outside = payload.substring(indexOut);\nvar insideTextIndex = inside.search(\"temperature=\");\nvar insideText = inside.substring(insideTextIndex+12,insideTextIndex+16);\nvar outsideTextIndex = inside.search(\"temperature=\");\nvar outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+16);\nvar humidityTextIndex = inside.search(\"humidity=\");\nvar humidityText = inside.substring(humidityTextIndex+9,humidityTextIndex+11);\n\nif(insideText.substr(insideText.length - 1) == \"\\t\"){\n    insideText = inside.substring(insideTextIndex+12,insideTextIndex+15);\n}\nif(outsideText.substr(outsideText.length - 1) == \"\\t\"){\n    outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+15);\n}\nvar newPayload = {\n    inside: insideText,\n    outside: outsideText,\n    humidity: humidityText\n}\n\nmsg.payload = newPayload;\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "x": 470,
@@ -577,7 +579,7 @@
     "z": "98edc158.ad053",
     "name": "",
     "topic": "",
-    "payload": "id=247 temperature=3.8\thumidity=38\ttime=2017-02-03 23:11:07\tage=32 type=sensor protocol=fineoffset\tmodel=temperature id=248\ttemperature=7.5\t",
+    "payload": "id=247 temperature=33.8\thumidity=38\ttime=2017-02-03 23:11:07\tage=32 type=sensor protocol=fineoffset\tmodel=temperature id=248\ttemperature=7.5\t",
     "payloadType": "str",
     "repeat": "",
     "crontab": "",
@@ -773,6 +775,46 @@
     "wires": [
       [
         "983c920f.050d5"
+      ]
+    ]
+  },
+  {
+    "id": "410df9e4.58f7f8",
+    "type": "inject",
+    "z": "98edc158.ad053",
+    "name": "",
+    "topic": "sängkulor",
+    "payload": "0",
+    "payloadType": "str",
+    "repeat": "",
+    "crontab": "00 22 * * *",
+    "once": false,
+    "x": 90,
+    "y": 700,
+    "wires": [
+      [
+        "bc88c06c.06b7a",
+        "c9045fb9.e8b6c"
+      ]
+    ]
+  },
+  {
+    "id": "5d406d56.6d9c34",
+    "type": "inject",
+    "z": "98edc158.ad053",
+    "name": "",
+    "topic": "sängkulor",
+    "payload": "1",
+    "payloadType": "str",
+    "repeat": "",
+    "crontab": "00 16 * * *",
+    "once": false,
+    "x": 90,
+    "y": 560,
+    "wires": [
+      [
+        "44dee912.b7d6e8",
+        "bc88c06c.06b7a"
       ]
     ]
   },
