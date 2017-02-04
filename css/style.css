@@ -22,19 +22,39 @@ span#motionsensor {
 span#logging {
     font-size: 10px;
 }
+span#degreesInLabel {
+    font-weight: 100;
+    font-size: 20px;
+}
 span#degreesInside {
     font-weight: 100;
     font-size: 80px;
 }
-span#degreesOutside {
+span#celciusIn {
     font-weight: 100;
+    font-size: 20px;
+}
+span#degreesOutLabel {
+    font-weight: 100;
+    font-size: 20px;
+}
+span#degreesOutside {
+    font-weight: 200;
     font-size: 40px;
 }
-span#degreesIn {
+span#celciusOut {
     font-weight: 100;
-    font-size: 10px;
+    font-size: 15px;
 }
-span#degreesOut {
+span#humidityLabel {
+    font-weight: 100;
+    font-size: 15px;
+}
+span#humidityValue {
+    font-weight: 300;
+    font-size: 15px;
+}
+span#humidityPercent {
     font-weight: 100;
     font-size: 10px;
 }

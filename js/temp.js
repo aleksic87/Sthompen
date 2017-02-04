@@ -9,6 +9,8 @@ var temp = (function () {
         document.getElementById("degreesInside").innerHTML = insideVal;
         var outsideVal = payload.outside;
         document.getElementById("degreesOutside").innerHTML = outsideVal;
+        var humidityVal = payload.humidity;
+        document.getElementById("humidityValue").innerHTML = humidityVal;
     };
 
     return {
