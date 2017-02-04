@@ -1,172 +1,172 @@
 [
   {
-    "id": "6c2db915.4ad3b8",
+    "id": "f4abe5fe.338458",
     "type": "rpi-gpio in",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "PIR",
     "pin": "7",
     "intype": "tri",
     "debounce": "25",
     "read": false,
-    "x": 130,
-    "y": 120,
+    "x": 115,
+    "y": 176,
     "wires": [
       [
-        "acd6775e.d90c98"
+        "a927bf23.e36c7"
       ]
     ]
   },
   {
-    "id": "18263be4.47a2e4",
+    "id": "dba7b7c9.a629a8",
     "type": "mqtt out",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "motionstatus",
     "topic": "motionstatus",
     "qos": "",
     "retain": "",
-    "broker": "478a3355.a511cc",
-    "x": 610,
-    "y": 120,
+    "broker": "2d24316e.12544e",
+    "x": 595,
+    "y": 176,
     "wires": []
   },
   {
-    "id": "306793ec.7799ac",
+    "id": "691526f4.60b108",
     "type": "mqtt in",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "topic": "vardagsrum",
     "qos": "2",
-    "broker": "478a3355.a511cc",
-    "x": 90,
-    "y": 440,
+    "broker": "2d24316e.12544e",
+    "x": 75,
+    "y": 496,
     "wires": [
       [
-        "6d62d8f9.f3cc18",
-        "70f1b454.20e32c"
+        "111d59a3.5e0266",
+        "ed118ad6.690b48"
       ]
     ]
   },
   {
-    "id": "acd6775e.d90c98",
+    "id": "a927bf23.e36c7",
     "type": "function",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "pir value",
     "func": "//var array = ();\nglobal.set(\"newPIRStatus\",msg.payload);\n\n\n//global.set(\"00\",msg.payload);\n\n\nreturn msg;",
     "outputs": "1",
     "noerr": 0,
-    "x": 300,
-    "y": 120,
+    "x": 285,
+    "y": 176,
     "wires": [
       [
-        "18263be4.47a2e4"
+        "dba7b7c9.a629a8"
       ]
     ]
   },
   {
-    "id": "6d62d8f9.f3cc18",
+    "id": "111d59a3.5e0266",
     "type": "function",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "ledVardagsrum",
     "func": "global.set(\"newledStatusVardagsrum\",msg.payload);\n\nif(global.get(\"ledStatusVardagsrum\") != global.get(\"newledStatusVardagsrum\")){\n    global.set(\"ledStatusVardagsrum\",global.get(\"newledStatusVardagsrum\"));\n    msg.payload = global.get(\"ledStatusVardagsrum\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusVardagsrum\");\n}\n\nreturn msg;",
     "outputs": "1",
     "noerr": 0,
-    "x": 280,
-    "y": 440,
+    "x": 265,
+    "y": 496,
     "wires": [
       [
-        "69b7bdea.7aa394",
-        "4c004b30.2c8ca4"
+        "b7ab810a.ebbb8",
+        "97a498e8.852618"
       ]
     ]
   },
   {
-    "id": "9fe597ba.fa6138",
+    "id": "ea72a107.a4db9",
     "type": "function",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "led",
-    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"), \"ledKok\": global.get(\"ledStatusKok\")};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
+    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\")};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
     "outputs": "1",
     "noerr": 0,
-    "x": 270,
-    "y": 200,
+    "x": 255,
+    "y": 256,
     "wires": [
       [
-        "7b1f898a.cdbac8",
-        "f9273691.214d68"
+        "f75adf1.b253f2",
+        "6612117d.0d4"
       ]
     ]
   },
   {
-    "id": "e9df7daf.bce35",
+    "id": "f0b78c2a.38daf",
     "type": "mqtt in",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "topic": "appConnect",
     "qos": "2",
-    "broker": "478a3355.a511cc",
-    "x": 90,
-    "y": 240,
+    "broker": "2d24316e.12544e",
+    "x": 75,
+    "y": 296,
     "wires": [
       [
-        "9fe597ba.fa6138",
-        "387041a1.71ef4e"
+        "ea72a107.a4db9",
+        "95780c2e.1e05c"
       ]
     ]
   },
   {
-    "id": "7b1f898a.cdbac8",
+    "id": "f75adf1.b253f2",
     "type": "mqtt out",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "topic": "appConnectLEDResponse",
     "qos": "",
     "retain": "",
-    "broker": "478a3355.a511cc",
-    "x": 660,
-    "y": 200,
+    "broker": "2d24316e.12544e",
+    "x": 645,
+    "y": 256,
     "wires": []
   },
   {
-    "id": "1cacadd6.52e5e2",
+    "id": "bf77853f.816178",
     "type": "mqtt out",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "appConnectPIRResponse",
     "topic": "appConnectPIRResponse",
     "qos": "",
     "retain": "",
-    "broker": "478a3355.a511cc",
-    "x": 650,
-    "y": 260,
+    "broker": "2d24316e.12544e",
+    "x": 635,
+    "y": 316,
     "wires": []
   },
   {
-    "id": "387041a1.71ef4e",
+    "id": "95780c2e.1e05c",
     "type": "function",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "PIR",
     "func": "global.set(\"00\",1)\nglobal.set(\"14\",1)\n\ndata = ([\n        [\"00\", global.get(\"00\")],\n        [\"01\", 0],\n        [\"02\", 0],\n        [\"03\", 0],\n        [\"04\", 0],\n        [\"05\", 0],\n        [\"06\", 0],\n        [\"07\", 0],\n        [\"08\", 0],\n        [\"09\", 0],\n        [\"10\", 1],\n        [\"11\", 0],\n        [\"12\", 1],\n        [\"13\", 1],\n        [\"14\", global.get(\"14\")],\n        [\"15\", 0],\n        [\"16\", 0],\n        [\"17\", 0],\n        [\"18\", 0],\n        [\"19\", 1],\n        [\"20\", 1],\n        [\"21\", 1],\n        [\"22\", 0],\n        [\"23\", 0]\n        ]);\n\nmsg.payload = data;\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
-    "x": 270,
-    "y": 260,
+    "x": 255,
+    "y": 316,
     "wires": [
       [
-        "1cacadd6.52e5e2"
+        "bf77853f.816178"
       ]
     ]
   },
   {
-    "id": "cec1620a.b5679",
+    "id": "3f4704d2.845a6c",
     "type": "exec",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "command": "tdtool --on 111",
     "addpay": true,
     "append": "",
     "useSpawn": "",
     "timer": "",
     "name": "on",
-    "x": 250,
-    "y": 340,
+    "x": 235,
+    "y": 396,
     "wires": [
       [],
       [],
@@ -174,17 +174,17 @@
     ]
   },
   {
-    "id": "9b03b371.aadea",
+    "id": "806d6dbc.9278d",
     "type": "exec",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "command": "tdtool --off 111",
     "addpay": true,
     "append": "",
     "useSpawn": "",
     "timer": "",
     "name": "off",
-    "x": 250,
-    "y": 400,
+    "x": 235,
+    "y": 456,
     "wires": [
       [],
       [],
@@ -192,9 +192,9 @@
     ]
   },
   {
-    "id": "70f1b454.20e32c",
+    "id": "ed118ad6.690b48",
     "type": "switch",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "property": "payload",
     "propertyType": "msg",
@@ -212,38 +212,38 @@
     ],
     "checkall": "true",
     "outputs": 2,
-    "x": 130,
-    "y": 380,
+    "x": 115,
+    "y": 436,
     "wires": [
       [
-        "cec1620a.b5679"
+        "3f4704d2.845a6c"
       ],
       [
-        "9b03b371.aadea"
+        "806d6dbc.9278d"
       ]
     ]
   },
   {
-    "id": "26c5e2f2.2af4be",
+    "id": "47f84844.f25b58",
     "type": "mqtt in",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "topic": "sovrum",
     "qos": "2",
-    "broker": "478a3355.a511cc",
-    "x": 70,
-    "y": 600,
+    "broker": "2d24316e.12544e",
+    "x": 55,
+    "y": 656,
     "wires": [
       [
-        "597df64b.58f588",
-        "d8eaed2.7ed701"
+        "bc88c06c.06b7a",
+        "1ee62e73.c0b302"
       ]
     ]
   },
   {
-    "id": "d8eaed2.7ed701",
+    "id": "1ee62e73.c0b302",
     "type": "switch",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "property": "payload",
     "propertyType": "msg",
@@ -261,128 +261,29 @@
     ],
     "checkall": "true",
     "outputs": 2,
-    "x": 130,
-    "y": 540,
+    "x": 115,
+    "y": 596,
     "wires": [
       [
-        "ab1bf085.22c48"
+        "44dee912.b7d6e8"
       ],
       [
-        "ce751e20.19022"
+        "c9045fb9.e8b6c"
       ]
     ]
   },
   {
-    "id": "ab1bf085.22c48",
+    "id": "44dee912.b7d6e8",
     "type": "exec",
-    "z": "ad51a931.fea7a8",
-    "command": "tdtool --on 222",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "on",
-    "x": 250,
-    "y": 500,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "ce751e20.19022",
-    "type": "exec",
-    "z": "ad51a931.fea7a8",
-    "command": "tdtool --off 222",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "off",
-    "x": 250,
-    "y": 560,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "597df64b.58f588",
-    "type": "function",
-    "z": "ad51a931.fea7a8",
-    "name": "ledSovrum",
-    "func": "global.set(\"newledStatusSovrum\",msg.payload);\n\nif(global.get(\"ledStatusSovrum\") != global.get(\"newledStatusSovrum\")){\n    global.set(\"ledStatusSovrum\",global.get(\"newledStatusSovrum\"));\n    msg.payload = global.get(\"ledStatusSovrum\");\n}\n\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 270,
-    "y": 600,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "cb981283.885aa",
-    "type": "mqtt in",
-    "z": "ad51a931.fea7a8",
-    "name": "",
-    "topic": "kok",
-    "qos": "2",
-    "broker": "478a3355.a511cc",
-    "x": 450,
-    "y": 440,
-    "wires": [
-      [
-        "2546326.9e495ce",
-        "d47a4e4b.48638"
-      ]
-    ]
-  },
-  {
-    "id": "2546326.9e495ce",
-    "type": "switch",
-    "z": "ad51a931.fea7a8",
-    "name": "",
-    "property": "payload",
-    "propertyType": "msg",
-    "rules": [
-      {
-        "t": "eq",
-        "v": "1",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "0",
-        "vt": "str"
-      }
-    ],
-    "checkall": "true",
-    "outputs": 2,
-    "x": 490,
-    "y": 380,
-    "wires": [
-      [
-        "3ce9b7ee.f5a9c8"
-      ],
-      [
-        "f1da3170.58b83"
-      ]
-    ]
-  },
-  {
-    "id": "3ce9b7ee.f5a9c8",
-    "type": "exec",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "command": "tdtool --on 333",
     "addpay": true,
     "append": "",
     "useSpawn": "",
     "timer": "",
     "name": "on",
-    "x": 630,
-    "y": 340,
+    "x": 235,
+    "y": 556,
     "wires": [
       [],
       [],
@@ -390,17 +291,17 @@
     ]
   },
   {
-    "id": "f1da3170.58b83",
+    "id": "c9045fb9.e8b6c",
     "type": "exec",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "command": "tdtool --off 333",
     "addpay": true,
     "append": "",
     "useSpawn": "",
     "timer": "",
     "name": "off",
-    "x": 630,
-    "y": 400,
+    "x": 235,
+    "y": 616,
     "wires": [
       [],
       [],
@@ -408,90 +309,475 @@
     ]
   },
   {
-    "id": "d47a4e4b.48638",
+    "id": "bc88c06c.06b7a",
     "type": "function",
-    "z": "ad51a931.fea7a8",
-    "name": "ledKok",
-    "func": "global.set(\"newledStatusKok\",msg.payload);\n\nif(global.get(\"ledStatusKok\") != global.get(\"newledStatusKok\")){\n    global.set(\"ledStatusKok\",global.get(\"newledStatusKok\"));\n    msg.payload = global.get(\"ledStatusKok\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusKok\");\n}\n\nreturn msg;",
+    "z": "98edc158.ad053",
+    "name": "ledSovrum",
+    "func": "global.set(\"newledStatusSovrum\",msg.payload);\n\nif(global.get(\"ledStatusSovrum\") != global.get(\"newledStatusSovrum\")){\n    global.set(\"ledStatusSovrum\",global.get(\"newledStatusSovrum\"));\n    msg.payload = global.get(\"ledStatusSovrum\");\n}\n\nreturn msg;",
     "outputs": "1",
     "noerr": 0,
-    "x": 640,
-    "y": 440,
+    "x": 255,
+    "y": 656,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "cf36b351.c5cdd",
+    "type": "mqtt in",
+    "z": "98edc158.ad053",
+    "name": "",
+    "topic": "gastrum",
+    "qos": "2",
+    "broker": "2d24316e.12544e",
+    "x": 445,
+    "y": 496,
     "wires": [
       [
-        "69b7bdea.7aa394",
-        "4c004b30.2c8ca4"
+        "4354c865.fcdb68",
+        "e5fff7f.0318b08"
       ]
     ]
   },
   {
-    "id": "69b7bdea.7aa394",
+    "id": "4354c865.fcdb68",
+    "type": "switch",
+    "z": "98edc158.ad053",
+    "name": "",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "1",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "0",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "outputs": 2,
+    "x": 475,
+    "y": 436,
+    "wires": [
+      [
+        "873d11d2.27653"
+      ],
+      [
+        "d785029d.a94ba"
+      ]
+    ]
+  },
+  {
+    "id": "873d11d2.27653",
+    "type": "exec",
+    "z": "98edc158.ad053",
+    "command": "tdtool --on 222",
+    "addpay": true,
+    "append": "",
+    "useSpawn": "",
+    "timer": "",
+    "name": "on",
+    "x": 615,
+    "y": 396,
+    "wires": [
+      [],
+      [],
+      []
+    ]
+  },
+  {
+    "id": "d785029d.a94ba",
+    "type": "exec",
+    "z": "98edc158.ad053",
+    "command": "tdtool --off 222",
+    "addpay": true,
+    "append": "",
+    "useSpawn": "",
+    "timer": "",
+    "name": "off",
+    "x": 615,
+    "y": 456,
+    "wires": [
+      [],
+      [],
+      []
+    ]
+  },
+  {
+    "id": "e5fff7f.0318b08",
+    "type": "function",
+    "z": "98edc158.ad053",
+    "name": "ledGastrum",
+    "func": "global.set(\"newledStatusGastrum\",msg.payload);\n\nif(global.get(\"ledStatusGastrum\") != global.get(\"newledStatusGastrum\")){\n    global.set(\"ledStatusGastrum\",global.get(\"newledStatusGastrum\"));\n    msg.payload = global.get(\"ledStatusGastrum\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusGastrum\");\n}\n\nreturn msg;",
+    "outputs": "1",
+    "noerr": 0,
+    "x": 635,
+    "y": 496,
+    "wires": [
+      [
+        "b7ab810a.ebbb8",
+        "97a498e8.852618"
+      ]
+    ]
+  },
+  {
+    "id": "b7ab810a.ebbb8",
     "type": "debug",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "active": true,
     "console": "false",
     "complete": "false",
-    "x": 850,
-    "y": 680,
+    "x": 835,
+    "y": 736,
     "wires": []
   },
   {
-    "id": "f9273691.214d68",
+    "id": "6612117d.0d4",
     "type": "debug",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "active": false,
     "console": "false",
     "complete": "false",
-    "x": 860,
-    "y": 260,
+    "x": 845,
+    "y": 316,
     "wires": []
   },
   {
-    "id": "1fddb24f.71ab6e",
+    "id": "8ead34cb.7c98a8",
     "type": "mqtt out",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "topic": "liveUpdateLeds",
     "qos": "",
     "retain": "",
-    "broker": "478a3355.a511cc",
-    "x": 540,
-    "y": 640,
+    "broker": "2d24316e.12544e",
+    "x": 525,
+    "y": 696,
     "wires": []
   },
   {
-    "id": "4c004b30.2c8ca4",
+    "id": "97a498e8.852618",
     "type": "function",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "liveUpdateLeds",
-    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"), \"ledKok\": global.get(\"ledStatusKok\")};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
+    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\")};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
     "outputs": 1,
     "noerr": 0,
-    "x": 540,
-    "y": 580,
+    "x": 525,
+    "y": 636,
     "wires": [
       [
-        "1fddb24f.71ab6e",
-        "4aa119c6.b3cca8"
+        "8ead34cb.7c98a8",
+        "9bc298de.26d7d8"
       ]
     ]
   },
   {
-    "id": "4aa119c6.b3cca8",
+    "id": "9bc298de.26d7d8",
     "type": "debug",
-    "z": "ad51a931.fea7a8",
+    "z": "98edc158.ad053",
     "name": "",
     "active": true,
     "console": "false",
     "complete": "false",
-    "x": 740,
-    "y": 600,
+    "x": 725,
+    "y": 656,
     "wires": []
   },
   {
-    "id": "478a3355.a511cc",
+    "id": "ac37f1b9.07775",
+    "type": "exec",
+    "z": "98edc158.ad053",
+    "command": "tdtool --list-sensors",
+    "addpay": true,
+    "append": "",
+    "useSpawn": "",
+    "timer": "",
+    "name": "sensors",
+    "x": 280,
+    "y": 1000,
+    "wires": [
+      [
+        "e2532aa7.f97c18"
+      ],
+      [],
+      []
+    ]
+  },
+  {
+    "id": "86a27cff.00681",
+    "type": "inject",
+    "z": "98edc158.ad053",
+    "name": "",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "x": 100,
+    "y": 1000,
+    "wires": [
+      [
+        "ac37f1b9.07775"
+      ]
+    ]
+  },
+  {
+    "id": "4f7ea708.f8f0a8",
+    "type": "debug",
+    "z": "98edc158.ad053",
+    "name": "",
+    "active": true,
+    "console": "false",
+    "complete": "payload",
+    "x": 650,
+    "y": 1060,
+    "wires": []
+  },
+  {
+    "id": "e2532aa7.f97c18",
+    "type": "function",
+    "z": "98edc158.ad053",
+    "name": "tempSensor",
+    "func": "var payload = msg.payload;\nvar indexIn = payload.search(\"id=247\");\nvar indexOut = payload.search(\"id=248\");\nvar inside = payload.substring(indexIn);\nvar outside = payload.substring(indexOut);\nvar insideTextIndex = inside.search(\"temperature=\");\nvar insideText = inside.substring(insideTextIndex+12,insideTextIndex+16);\nvar outsideTextIndex = inside.search(\"temperature=\");\nvar outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+16);\nvar humidityTextIndex = inside.search(\"humidity=\");\nvar humidityText = inside.substring(humidityTextIndex+9,humidityTextIndex+11);\n\nvar newPayload = {\n    inside: insideText,\n    outside: outsideText,\n    humidity: humidityText\n}\n\nmsg.payload = newPayload;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 470,
+    "y": 1000,
+    "wires": [
+      [
+        "4f7ea708.f8f0a8",
+        "4439ade6.43add4"
+      ]
+    ]
+  },
+  {
+    "id": "4439ade6.43add4",
+    "type": "mqtt out",
+    "z": "98edc158.ad053",
+    "name": "",
+    "topic": "tempSensor",
+    "qos": "",
+    "retain": "",
+    "broker": "2d24316e.12544e",
+    "x": 650,
+    "y": 1000,
+    "wires": []
+  },
+  {
+    "id": "4709558e.1c573c",
+    "type": "inject",
+    "z": "98edc158.ad053",
+    "name": "",
+    "topic": "",
+    "payload": "id=247 temperature=3.8\thumidity=38\ttime=2017-02-03 23:11:07\tage=32 type=sensor protocol=fineoffset\tmodel=temperature id=248\ttemperature=7.5\t",
+    "payloadType": "str",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "x": 250,
+    "y": 1100,
+    "wires": [
+      [
+        "e2532aa7.f97c18",
+        "4f7ea708.f8f0a8"
+      ]
+    ]
+  },
+  {
+    "id": "3f6b41fc.17481e",
+    "type": "mqtt in",
+    "z": "98edc158.ad053",
+    "name": "",
+    "topic": "vardagsrum2",
+    "qos": "2",
+    "broker": "2d24316e.12544e",
+    "x": 70,
+    "y": 800,
+    "wires": [
+      [
+        "e617e745.b2acc8",
+        "ff483309.51b06"
+      ]
+    ]
+  },
+  {
+    "id": "e617e745.b2acc8",
+    "type": "function",
+    "z": "98edc158.ad053",
+    "name": "ledVardagsrum2",
+    "func": "global.set(\"newledStatusVardagsrum2\",msg.payload);\n\nif(global.get(\"ledStatusVardagsrum2\") != global.get(\"newledStatusVardagsrum2\")){\n    global.set(\"ledStatusVardagsrum2\",global.get(\"newledStatusVardagsrum2\"));\n    msg.payload = global.get(\"ledStatusVardagsrum2\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusVardagsrum2\");\n}\n\nreturn msg;",
+    "outputs": "1",
+    "noerr": 0,
+    "x": 260,
+    "y": 800,
+    "wires": [
+      [
+        "97a498e8.852618"
+      ]
+    ]
+  },
+  {
+    "id": "26bcbd05.1231a2",
+    "type": "exec",
+    "z": "98edc158.ad053",
+    "command": "tdtool --on 8",
+    "addpay": true,
+    "append": "",
+    "useSpawn": "",
+    "timer": "",
+    "name": "on",
+    "x": 230,
+    "y": 700,
+    "wires": [
+      [],
+      [],
+      []
+    ]
+  },
+  {
+    "id": "ad6993e2.333e5",
+    "type": "exec",
+    "z": "98edc158.ad053",
+    "command": "tdtool --off 8",
+    "addpay": true,
+    "append": "",
+    "useSpawn": "",
+    "timer": "",
+    "name": "off",
+    "x": 230,
+    "y": 760,
+    "wires": [
+      [],
+      [],
+      []
+    ]
+  },
+  {
+    "id": "ff483309.51b06",
+    "type": "switch",
+    "z": "98edc158.ad053",
+    "name": "",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "1",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "0",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "outputs": 2,
+    "x": 110,
+    "y": 740,
+    "wires": [
+      [
+        "26bcbd05.1231a2"
+      ],
+      [
+        "ad6993e2.333e5"
+      ]
+    ]
+  },
+  {
+    "id": "983c920f.050d5",
+    "type": "exec",
+    "z": "98edc158.ad053",
+    "command": "tdtool --on 8",
+    "addpay": true,
+    "append": "",
+    "useSpawn": "",
+    "timer": "",
+    "name": "on",
+    "x": 250,
+    "y": 940,
+    "wires": [
+      [
+        "642ec822.427ae8"
+      ],
+      [
+        "642ec822.427ae8"
+      ],
+      [
+        "642ec822.427ae8"
+      ]
+    ]
+  },
+  {
+    "id": "6bf54dcf.022e74",
+    "type": "mqtt in",
+    "z": "98edc158.ad053",
+    "name": "",
+    "topic": "vardagsrum2Dim",
+    "qos": "2",
+    "broker": "2d24316e.12544e",
+    "x": 80,
+    "y": 940,
+    "wires": [
+      [
+        "983c920f.050d5",
+        "a7031042.0df21"
+      ]
+    ]
+  },
+  {
+    "id": "a7031042.0df21",
+    "type": "debug",
+    "z": "98edc158.ad053",
+    "name": "",
+    "active": true,
+    "console": "false",
+    "complete": "false",
+    "x": 270,
+    "y": 880,
+    "wires": []
+  },
+  {
+    "id": "642ec822.427ae8",
+    "type": "debug",
+    "z": "98edc158.ad053",
+    "name": "",
+    "active": true,
+    "console": "false",
+    "complete": "false",
+    "x": 430,
+    "y": 940,
+    "wires": []
+  },
+  {
+    "id": "18e2d4bf.fd804b",
+    "type": "inject",
+    "z": "98edc158.ad053",
+    "name": "",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "x": 80,
+    "y": 900,
+    "wires": [
+      [
+        "983c920f.050d5"
+      ]
+    ]
+  },
+  {
+    "id": "2d24316e.12544e",
     "type": "mqtt-broker",
     "z": "",
     "broker": "m21.cloudmqtt.com",
