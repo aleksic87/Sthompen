@@ -10,7 +10,7 @@ var debugLogger = (function () {
         date = new Date();
         payload = msg;
         div = document.getElementById("logging");
-        div.innerHTML = div.innerHTML + "<br>" + date + " : " + "<br>" + payload + "<br>";
+        div.innerHTML = date + " : " + "<br>" + payload + "<br>" + div.innerHTML + "<br>";
     }
 
     return {

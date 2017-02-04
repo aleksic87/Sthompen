@@ -4,22 +4,28 @@
 
 var led = (function () {
 
-    var vardagsrumStatus,kokStatus,allaLamporStatus;
+    var vardagsrumStatus,vardagsrum2Status,vardagsrum2DimStatus,gastrumStatus,allaLamporStatus;
 
     allaLamporON = function () {
         allaLamporStatus = "1";
         clientMQTT.sendMessage("vardagsrum", allaLamporStatus);
-        clientMQTT.sendMessage("kok", allaLamporStatus);
+        if(document.getElementById('vardagsrum2').checked == false) {
+            clientMQTT.sendMessage("vardagsrum2", allaLamporStatus);
+        }
+        clientMQTT.sendMessage("gastrum", allaLamporStatus);
         document.getElementById('vardagsrum').checked = true;
-        document.getElementById('kok').checked = true;
+        document.getElementById('vardagsrum2').checked = true;
+        document.getElementById('gastrum').checked = true;
     };
 
     allaLamporOFF = function () {
         allaLamporStatus = "0";
         clientMQTT.sendMessage("vardagsrum", allaLamporStatus);
-        clientMQTT.sendMessage("kok", allaLamporStatus);
+        clientMQTT.sendMessage("vardagsrum2", allaLamporStatus);
+        clientMQTT.sendMessage("gastrum", allaLamporStatus);
         document.getElementById('vardagsrum').checked = false;
-        document.getElementById('kok').checked = false;
+        document.getElementById('vardagsrum2').checked = false;
+        document.getElementById('gastrum').checked = false;
     };
 
     vardagsrum = function () {
@@ -30,6 +36,26 @@ var led = (function () {
             vardagsrumStatus = "0";
         }
         clientMQTT.sendMessage("vardagsrum", vardagsrumStatus);
+    };
+    vardagsrum2 = function () {
+        if(event.value){
+            vardagsrum2Status = "1";
+        }
+        else{
+            vardagsrum2Status = "0";
+        }
+        clientMQTT.sendMessage("vardagsrum2", vardagsrum2Status);
+    };
+    vardagsrum2Dim = function () {
+        if(document.getElementById('vardagsrum2').checked == true) {
+            clientMQTT.sendMessage("vardagsrum2Dim", "1");
+            if(document.getElementById('vardagsrum2Dim').style.backgroundColor != 'rgb(174, 180, 4)') {
+                document.getElementById('vardagsrum2Dim').style.backgroundColor = 'rgb(174, 180, 4)';
+            }
+            else{
+                document.getElementById('vardagsrum2Dim').style.backgroundColor = 'rgba(24, 103, 194, 0.81)';
+            }
+        }
     };
 
     sovrum = function () {
@@ -42,17 +68,17 @@ var led = (function () {
         clientMQTT.sendMessage("sovrum", status);
     };
 
-    kok = function () {
+    gastrum = function () {
         if(event.value){
-            kokStatus = "1";
+            gastrumStatus = "1";
         }
         else{
-            kokStatus = "0";
+            gastrumStatus = "0";
         }
-        clientMQTT.sendMessage("kok", kokStatus);
+        clientMQTT.sendMessage("gastrum", gastrumStatus);
     };
 
-    //{ "ledVardagsrum": "0", "ledKok": "1" }
+    //{ "ledVardagsrum": "0", "ledGastrum": "1" }
     updateStatus = function (ledStatus) {
         if(ledStatus.ledVardagsrum == "0"){
             document.getElementById('vardagsrum').checked = false;
@@ -62,13 +88,21 @@ var led = (function () {
             document.getElementById('vardagsrum').checked = true;
             vardagsrumStatus = "1";
         }
-        if(ledStatus.ledKok == "0"){
-            document.getElementById('kok').checked = false;
-            kokStatus = "0";
+        if(ledStatus.ledVardagsrum2 == "0"){
+            document.getElementById('vardagsrum2').checked = false;
+            vardagsrum2Status = "0";
         }
         else{
-            document.getElementById('kok').checked = true;
-            kokStatus = "1";
+            document.getElementById('vardagsrum2').checked = true;
+            vardagsrum2Status = "1";
+        }
+        if(ledStatus.ledGastrum == "0"){
+            document.getElementById('gastrum').checked = false;
+            gastrumStatus = "0";
+        }
+        else{
+            document.getElementById('gastrum').checked = true;
+            gastrumStatus = "1";
         }
     };
 
@@ -76,8 +110,10 @@ var led = (function () {
         toggleLedAllaLamporON: allaLamporON,
         toggleLedAllaLamporOFF: allaLamporOFF,
         toggleLedVardagsrum: vardagsrum,
+        toggleLedVardagsrum2: vardagsrum2,
+        toggleLedVardagsrum2Dim: vardagsrum2Dim,
         toggleLedSovrum: sovrum,
-        toggleLedKok: kok,
+        toggleLedGastrum: gastrum,
         updateLedStatus: updateStatus
     };
 })();

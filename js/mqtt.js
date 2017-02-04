@@ -28,15 +28,17 @@ var clientMQTT = (function () {
             onFailure: doFail
         };
         client.connect(options);
+        var modal = document.querySelector('ons-modal');
+        modal.show();
     };
 
     // called when the client connects
     onConnect = function () {
         connected = true;
         debugLogger.debugLog("Connected to MQTT");
-        document.getElementById("circle").style.background = "green";
         console.log('Connected with MQTT');
         client.subscribe("listen",0);
+        client.subscribe("tempSensor",0);
         client.subscribe("motionstatus",0);
         client.subscribe("led",0);
         client.subscribe("appConnectLEDResponse",0);
@@ -45,8 +47,10 @@ var clientMQTT = (function () {
         document.getElementById("allaLamporOFF").addEventListener("click", led.toggleLedAllaLamporOFF);
         document.getElementById("allaLamporON").addEventListener("click", led.toggleLedAllaLamporON);
         document.getElementById("vardagsrum").addEventListener("change", led.toggleLedVardagsrum);
+        document.getElementById("vardagsrum2").addEventListener("change", led.toggleLedVardagsrum2);
+        document.getElementById("vardagsrum2Dim").addEventListener("click", led.toggleLedVardagsrum2Dim);
         document.getElementById("sovrum").addEventListener("change", led.toggleLedSovrum);
-        document.getElementById("kok").addEventListener("change", led.toggleLedKok);
+        document.getElementById("gastrum").addEventListener("change", led.toggleLedGastrum);
 
         //Init sensor status
         var obj = JSON.parse(0);
@@ -81,7 +85,6 @@ var clientMQTT = (function () {
     // called when the client loses its connection
     onConnectionLost = function (responseObject) {
         connected=false;
-        document.getElementById("circle").style.background = "red";
         debugLogger.debugLog("Lost connection with MQTT");
         console.log("Lost connection with MQTT");
         if (responseObject.errorCode !== 0) {
@@ -102,9 +105,16 @@ var clientMQTT = (function () {
         }
         if (topic == "appConnectLEDResponse" || topic == "liveUpdateLeds") {
             led.updateLedStatus(jsonObj);
+            var modal = document.querySelector('ons-modal');
+            setTimeout(function() {
+                modal.hide();
+            }, 500);
         }
         if (topic == "appConnectPIRResponse") {
             plot.drawPIR(jsonObj);
+        }
+        if (topic == "tempSensor") {
+            temp.tempsens(jsonObj);
         }
     }
 
