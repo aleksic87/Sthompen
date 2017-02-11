@@ -8,8 +8,8 @@
     "intype": "tri",
     "debounce": "25",
     "read": false,
-    "x": 115,
-    "y": 176,
+    "x": 130,
+    "y": 300,
     "wires": [
       [
         "a927bf23.e36c7"
@@ -25,8 +25,8 @@
     "qos": "",
     "retain": "",
     "broker": "2d24316e.12544e",
-    "x": 595,
-    "y": 176,
+    "x": 610,
+    "y": 300,
     "wires": []
   },
   {
@@ -37,8 +37,8 @@
     "topic": "vardagsrum",
     "qos": "2",
     "broker": "2d24316e.12544e",
-    "x": 75,
-    "y": 496,
+    "x": 90,
+    "y": 740,
     "wires": [
       [
         "111d59a3.5e0266",
@@ -54,8 +54,8 @@
     "func": "//var array = ();\nglobal.set(\"newPIRStatus\",msg.payload);\n\n\n//global.set(\"00\",msg.payload);\n\n\nreturn msg;",
     "outputs": "1",
     "noerr": 0,
-    "x": 285,
-    "y": 176,
+    "x": 300,
+    "y": 300,
     "wires": [
       [
         "dba7b7c9.a629a8"
@@ -70,11 +70,10 @@
     "func": "global.set(\"newledStatusVardagsrum\",msg.payload);\n\nif(global.get(\"ledStatusVardagsrum\") != global.get(\"newledStatusVardagsrum\")){\n    global.set(\"ledStatusVardagsrum\",global.get(\"newledStatusVardagsrum\"));\n    msg.payload = global.get(\"ledStatusVardagsrum\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusVardagsrum\");\n}\n\nreturn msg;",
     "outputs": "1",
     "noerr": 0,
-    "x": 265,
-    "y": 496,
+    "x": 280,
+    "y": 760,
     "wires": [
       [
-        "b7ab810a.ebbb8",
         "97a498e8.852618"
       ]
     ]
@@ -87,12 +86,11 @@
     "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
     "outputs": "1",
     "noerr": 0,
-    "x": 255,
-    "y": 256,
+    "x": 270,
+    "y": 380,
     "wires": [
       [
-        "f75adf1.b253f2",
-        "6612117d.0d4"
+        "f75adf1.b253f2"
       ]
     ]
   },
@@ -104,12 +102,13 @@
     "topic": "appConnect",
     "qos": "2",
     "broker": "2d24316e.12544e",
-    "x": 75,
-    "y": 296,
+    "x": 90,
+    "y": 420,
     "wires": [
       [
         "ea72a107.a4db9",
-        "95780c2e.1e05c"
+        "ac37f1b9.07775",
+        "f7ce0d0b.ac08d"
       ]
     ]
   },
@@ -122,8 +121,8 @@
     "qos": "",
     "retain": "",
     "broker": "2d24316e.12544e",
-    "x": 645,
-    "y": 256,
+    "x": 660,
+    "y": 380,
     "wires": []
   },
   {
@@ -135,8 +134,8 @@
     "qos": "",
     "retain": "",
     "broker": "2d24316e.12544e",
-    "x": 635,
-    "y": 316,
+    "x": 650,
+    "y": 440,
     "wires": []
   },
   {
@@ -147,26 +146,24 @@
     "func": "global.set(\"00\",1)\nglobal.set(\"14\",1)\n\ndata = ([\n        [\"00\", global.get(\"00\")],\n        [\"01\", 0],\n        [\"02\", 0],\n        [\"03\", 0],\n        [\"04\", 0],\n        [\"05\", 0],\n        [\"06\", 0],\n        [\"07\", 0],\n        [\"08\", 0],\n        [\"09\", 0],\n        [\"10\", 1],\n        [\"11\", 0],\n        [\"12\", 1],\n        [\"13\", 1],\n        [\"14\", global.get(\"14\")],\n        [\"15\", 0],\n        [\"16\", 0],\n        [\"17\", 0],\n        [\"18\", 0],\n        [\"19\", 1],\n        [\"20\", 1],\n        [\"21\", 1],\n        [\"22\", 0],\n        [\"23\", 0]\n        ]);\n\nmsg.payload = data;\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
-    "x": 255,
-    "y": 316,
+    "x": 270,
+    "y": 420,
     "wires": [
-      [
-        "bf77853f.816178"
-      ]
+      []
     ]
   },
   {
     "id": "3f4704d2.845a6c",
     "type": "exec",
     "z": "98edc158.ad053",
-    "command": "tdtool --on 111",
+    "command": "tdtool --on 333",
     "addpay": true,
     "append": "",
     "useSpawn": "",
     "timer": "",
     "name": "on",
-    "x": 235,
-    "y": 396,
+    "x": 290,
+    "y": 680,
     "wires": [
       [],
       [],
@@ -177,14 +174,14 @@
     "id": "806d6dbc.9278d",
     "type": "exec",
     "z": "98edc158.ad053",
-    "command": "tdtool --off 111",
+    "command": "tdtool --off 333",
     "addpay": true,
     "append": "",
     "useSpawn": "",
     "timer": "",
     "name": "off",
-    "x": 235,
-    "y": 456,
+    "x": 290,
+    "y": 720,
     "wires": [
       [],
       [],
@@ -212,8 +209,8 @@
     ],
     "checkall": "true",
     "outputs": 2,
-    "x": 115,
-    "y": 436,
+    "x": 130,
+    "y": 680,
     "wires": [
       [
         "3f4704d2.845a6c"
@@ -231,8 +228,8 @@
     "topic": "sovrum",
     "qos": "2",
     "broker": "2d24316e.12544e",
-    "x": 55,
-    "y": 656,
+    "x": 70,
+    "y": 880,
     "wires": [
       [
         "bc88c06c.06b7a",
@@ -261,8 +258,8 @@
     ],
     "checkall": "true",
     "outputs": 2,
-    "x": 115,
-    "y": 596,
+    "x": 130,
+    "y": 820,
     "wires": [
       [
         "44dee912.b7d6e8"
@@ -282,8 +279,8 @@
     "useSpawn": "",
     "timer": "",
     "name": "on",
-    "x": 235,
-    "y": 556,
+    "x": 290,
+    "y": 820,
     "wires": [
       [],
       [],
@@ -300,8 +297,8 @@
     "useSpawn": "",
     "timer": "",
     "name": "off",
-    "x": 235,
-    "y": 616,
+    "x": 290,
+    "y": 860,
     "wires": [
       [],
       [],
@@ -316,8 +313,8 @@
     "func": "global.set(\"newledStatusSovrum\",msg.payload);\n\nif(global.get(\"ledStatusSovrum\") != global.get(\"newledStatusSovrum\")){\n    global.set(\"ledStatusSovrum\",global.get(\"newledStatusSovrum\"));\n    msg.payload = global.get(\"ledStatusSovrum\");\n}\n\nreturn msg;",
     "outputs": "1",
     "noerr": 0,
-    "x": 255,
-    "y": 656,
+    "x": 290,
+    "y": 900,
     "wires": [
       [
         "97a498e8.852618"
@@ -332,8 +329,8 @@
     "topic": "gastrum",
     "qos": "2",
     "broker": "2d24316e.12544e",
-    "x": 445,
-    "y": 496,
+    "x": 100,
+    "y": 620,
     "wires": [
       [
         "4354c865.fcdb68",
@@ -362,8 +359,8 @@
     ],
     "checkall": "true",
     "outputs": 2,
-    "x": 475,
-    "y": 436,
+    "x": 130,
+    "y": 560,
     "wires": [
       [
         "873d11d2.27653"
@@ -383,8 +380,8 @@
     "useSpawn": "",
     "timer": "",
     "name": "on",
-    "x": 615,
-    "y": 396,
+    "x": 290,
+    "y": 540,
     "wires": [
       [],
       [],
@@ -401,8 +398,8 @@
     "useSpawn": "",
     "timer": "",
     "name": "off",
-    "x": 615,
-    "y": 456,
+    "x": 290,
+    "y": 580,
     "wires": [
       [],
       [],
@@ -417,38 +414,13 @@
     "func": "global.set(\"newledStatusGastrum\",msg.payload);\n\nif(global.get(\"ledStatusGastrum\") != global.get(\"newledStatusGastrum\")){\n    global.set(\"ledStatusGastrum\",global.get(\"newledStatusGastrum\"));\n    msg.payload = global.get(\"ledStatusGastrum\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusGastrum\");\n}\n\nreturn msg;",
     "outputs": "1",
     "noerr": 0,
-    "x": 635,
-    "y": 496,
+    "x": 290,
+    "y": 620,
     "wires": [
       [
-        "b7ab810a.ebbb8",
         "97a498e8.852618"
       ]
     ]
-  },
-  {
-    "id": "b7ab810a.ebbb8",
-    "type": "debug",
-    "z": "98edc158.ad053",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "false",
-    "x": 835,
-    "y": 736,
-    "wires": []
-  },
-  {
-    "id": "6612117d.0d4",
-    "type": "debug",
-    "z": "98edc158.ad053",
-    "name": "",
-    "active": false,
-    "console": "false",
-    "complete": "false",
-    "x": 845,
-    "y": 316,
-    "wires": []
   },
   {
     "id": "8ead34cb.7c98a8",
@@ -459,8 +431,8 @@
     "qos": "",
     "retain": "",
     "broker": "2d24316e.12544e",
-    "x": 525,
-    "y": 696,
+    "x": 720,
+    "y": 780,
     "wires": []
   },
   {
@@ -471,26 +443,13 @@
     "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
     "outputs": 1,
     "noerr": 0,
-    "x": 525,
-    "y": 636,
+    "x": 540,
+    "y": 780,
     "wires": [
       [
-        "8ead34cb.7c98a8",
-        "9bc298de.26d7d8"
+        "8ead34cb.7c98a8"
       ]
     ]
-  },
-  {
-    "id": "9bc298de.26d7d8",
-    "type": "debug",
-    "z": "98edc158.ad053",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "false",
-    "x": 725,
-    "y": 656,
-    "wires": []
   },
   {
     "id": "ac37f1b9.07775",
@@ -503,7 +462,7 @@
     "timer": "",
     "name": "sensors",
     "x": 280,
-    "y": 1000,
+    "y": 1200,
     "wires": [
       [
         "e2532aa7.f97c18"
@@ -520,28 +479,16 @@
     "topic": "",
     "payload": "",
     "payloadType": "date",
-    "repeat": "",
+    "repeat": "600",
     "crontab": "",
     "once": false,
-    "x": 100,
-    "y": 1000,
+    "x": 110,
+    "y": 1200,
     "wires": [
       [
         "ac37f1b9.07775"
       ]
     ]
-  },
-  {
-    "id": "4f7ea708.f8f0a8",
-    "type": "debug",
-    "z": "98edc158.ad053",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "payload",
-    "x": 650,
-    "y": 1060,
-    "wires": []
   },
   {
     "id": "e2532aa7.f97c18",
@@ -552,10 +499,9 @@
     "outputs": 1,
     "noerr": 0,
     "x": 470,
-    "y": 1000,
+    "y": 1200,
     "wires": [
       [
-        "4f7ea708.f8f0a8",
         "4439ade6.43add4"
       ]
     ]
@@ -570,28 +516,8 @@
     "retain": "",
     "broker": "2d24316e.12544e",
     "x": 650,
-    "y": 1000,
+    "y": 1200,
     "wires": []
-  },
-  {
-    "id": "4709558e.1c573c",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "",
-    "payload": "id=247 temperature=33.8\thumidity=38\ttime=2017-02-03 23:11:07\tage=32 type=sensor protocol=fineoffset\tmodel=temperature id=248\ttemperature=7.5\t",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 250,
-    "y": 1100,
-    "wires": [
-      [
-        "e2532aa7.f97c18",
-        "4f7ea708.f8f0a8"
-      ]
-    ]
   },
   {
     "id": "3f6b41fc.17481e",
@@ -601,8 +527,8 @@
     "topic": "vardagsrum2",
     "qos": "2",
     "broker": "2d24316e.12544e",
-    "x": 70,
-    "y": 800,
+    "x": 90,
+    "y": 1040,
     "wires": [
       [
         "e617e745.b2acc8",
@@ -618,8 +544,8 @@
     "func": "global.set(\"newledStatusVardagsrum2\",msg.payload);\n\nif(global.get(\"ledStatusVardagsrum2\") != global.get(\"newledStatusVardagsrum2\")){\n    global.set(\"ledStatusVardagsrum2\",global.get(\"newledStatusVardagsrum2\"));\n    msg.payload = global.get(\"ledStatusVardagsrum2\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusVardagsrum2\");\n}\n\nreturn msg;",
     "outputs": "1",
     "noerr": 0,
-    "x": 260,
-    "y": 800,
+    "x": 280,
+    "y": 1040,
     "wires": [
       [
         "97a498e8.852618"
@@ -630,14 +556,14 @@
     "id": "26bcbd05.1231a2",
     "type": "exec",
     "z": "98edc158.ad053",
-    "command": "tdtool --on 8",
+    "command": "tdtool --on 444",
     "addpay": true,
     "append": "",
     "useSpawn": "",
     "timer": "",
     "name": "on",
-    "x": 230,
-    "y": 700,
+    "x": 290,
+    "y": 960,
     "wires": [
       [],
       [],
@@ -648,14 +574,14 @@
     "id": "ad6993e2.333e5",
     "type": "exec",
     "z": "98edc158.ad053",
-    "command": "tdtool --off 8",
+    "command": "tdtool --off 444",
     "addpay": true,
     "append": "",
     "useSpawn": "",
     "timer": "",
     "name": "off",
-    "x": 230,
-    "y": 760,
+    "x": 290,
+    "y": 1000,
     "wires": [
       [],
       [],
@@ -683,8 +609,8 @@
     ],
     "checkall": "true",
     "outputs": 2,
-    "x": 110,
-    "y": 740,
+    "x": 130,
+    "y": 980,
     "wires": [
       [
         "26bcbd05.1231a2"
@@ -698,24 +624,18 @@
     "id": "983c920f.050d5",
     "type": "exec",
     "z": "98edc158.ad053",
-    "command": "tdtool --on 8",
+    "command": "tdtool --on 444",
     "addpay": true,
     "append": "",
     "useSpawn": "",
     "timer": "",
     "name": "on",
-    "x": 250,
-    "y": 940,
+    "x": 290,
+    "y": 1120,
     "wires": [
-      [
-        "642ec822.427ae8"
-      ],
-      [
-        "642ec822.427ae8"
-      ],
-      [
-        "642ec822.427ae8"
-      ]
+      [],
+      [],
+      []
     ]
   },
   {
@@ -726,38 +646,13 @@
     "topic": "vardagsrum2Dim",
     "qos": "2",
     "broker": "2d24316e.12544e",
-    "x": 80,
-    "y": 940,
+    "x": 100,
+    "y": 1140,
     "wires": [
       [
-        "983c920f.050d5",
-        "a7031042.0df21"
+        "983c920f.050d5"
       ]
     ]
-  },
-  {
-    "id": "a7031042.0df21",
-    "type": "debug",
-    "z": "98edc158.ad053",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "false",
-    "x": 270,
-    "y": 880,
-    "wires": []
-  },
-  {
-    "id": "642ec822.427ae8",
-    "type": "debug",
-    "z": "98edc158.ad053",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "false",
-    "x": 430,
-    "y": 940,
-    "wires": []
   },
   {
     "id": "18e2d4bf.fd804b",
@@ -770,8 +665,8 @@
     "repeat": "",
     "crontab": "",
     "once": false,
-    "x": 80,
-    "y": 900,
+    "x": 120,
+    "y": 1100,
     "wires": [
       [
         "983c920f.050d5"
@@ -789,8 +684,8 @@
     "repeat": "",
     "crontab": "00 22 * * *",
     "once": false,
-    "x": 90,
-    "y": 700,
+    "x": 105,
+    "y": 924,
     "wires": [
       [
         "bc88c06c.06b7a",
@@ -807,14 +702,43 @@
     "payload": "1",
     "payloadType": "str",
     "repeat": "",
-    "crontab": "00 16 * * *",
+    "crontab": "00 17 * * *",
     "once": false,
-    "x": 90,
-    "y": 560,
+    "x": 110,
+    "y": 780,
     "wires": [
       [
         "44dee912.b7d6e8",
         "bc88c06c.06b7a"
+      ]
+    ]
+  },
+  {
+    "id": "5ac06d75.0a0184",
+    "type": "mqtt out",
+    "z": "98edc158.ad053",
+    "name": "appConnectPIRResponse",
+    "topic": "appConnectTempResponse",
+    "qos": "",
+    "retain": "",
+    "broker": "2d24316e.12544e",
+    "x": 650,
+    "y": 500,
+    "wires": []
+  },
+  {
+    "id": "f7ce0d0b.ac08d",
+    "type": "function",
+    "z": "98edc158.ad053",
+    "name": "temp",
+    "func": "\nglobal.set(\"temp1\",\"23\")\nglobal.set(\"temp2\",\"13\")\nglobal.set(\"temp3\",\"22\")\nglobal.set(\"temp4\",\"15\")\nglobal.set(\"temp5\",\"9\")\nvar a = parseInt(global.get(\"temp1\"))\nvar b = parseInt(global.get(\"temp2\"))\nvar c = parseInt(global.get(\"temp3\"))\nvar d = parseInt(global.get(\"temp4\"))\nvar e = parseInt(global.get(\"temp5\"))\n\nmsg.payload = [a,b,c,d,e]\n\nreturn msg;\n",
+    "outputs": "1",
+    "noerr": 0,
+    "x": 270,
+    "y": 460,
+    "wires": [
+      [
+        "5ac06d75.0a0184"
       ]
     ]
   },
