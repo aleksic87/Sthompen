@@ -43,6 +43,7 @@ var clientMQTT = (function () {
         client.subscribe("led",0);
         client.subscribe("appConnectLEDResponse",0);
         client.subscribe("appConnectPIRResponse",0);
+        client.subscribe("appConnectTempResponse",0);
         client.subscribe("liveUpdateLeds",0);
         document.getElementById("allaLamporOFF").addEventListener("click", led.toggleLedAllaLamporOFF);
         document.getElementById("allaLamporON").addEventListener("click", led.toggleLedAllaLamporON);
@@ -99,9 +100,12 @@ var clientMQTT = (function () {
         var jsonObj = $.parseJSON(payload);
         topic = message.destinationName;
         debugLogger.debugLog("Receive message from MQTT: " + topic + " : " + payload);
-        if (topic == "motionstatus") {
+        /*if (topic == "motionstatus") {
             pir.pirFunc();
             //plot.drawPIR(jsonObj);
+        }*/
+        if (topic == "tempSensor") {
+            temp.tempsens(jsonObj);
         }
         if (topic == "appConnectLEDResponse" || topic == "liveUpdateLeds") {
             led.updateLedStatus(jsonObj);
@@ -110,11 +114,10 @@ var clientMQTT = (function () {
                 modal.hide();
             }, 500);
         }
-        if (topic == "appConnectPIRResponse") {
-            plot.drawPIR(jsonObj);
-        }
-        if (topic == "tempSensor") {
-            temp.tempsens(jsonObj);
+        if (topic == "appConnectTempResponse") {
+            //plot.drawTemp(jsonObj);
+            //chart.ddd(jsonObj)
+            chart.eee(jsonObj)
         }
     }
 

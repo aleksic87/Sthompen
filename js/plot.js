@@ -29,7 +29,7 @@ var plot = (function () {
         // Create the data table.
         dataPIR = new google.visualization.DataTable();
         dataPIR.addColumn('string', 'Tid');
-        dataPIR.addColumn('number', 'Rörelse');
+        dataPIR.addColumn('string', 'Rörelse');
         dataPIR.addRows(payloadPIR);
 
         // Set chart options
