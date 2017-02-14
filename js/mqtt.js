@@ -99,25 +99,17 @@ var clientMQTT = (function () {
         payload = message.payloadString;
         var jsonObj = $.parseJSON(payload);
         topic = message.destinationName;
-        debugLogger.debugLog("Receive message from MQTT: " + topic + " : " + payload);
-        /*if (topic == "motionstatus") {
-            pir.pirFunc();
-            //plot.drawPIR(jsonObj);
-        }*/
-        if (topic == "tempSensor") {
-            temp.tempsens(jsonObj);
-        }
+        //debugLogger.debugLog("Receive message from MQTT: " + topic + " : " + payload);
         if (topic == "appConnectLEDResponse" || topic == "liveUpdateLeds") {
             led.updateLedStatus(jsonObj);
             var modal = document.querySelector('ons-modal');
             setTimeout(function() {
                 modal.hide();
-            }, 500);
+            }, 600);
         }
-        if (topic == "appConnectTempResponse") {
-            //plot.drawTemp(jsonObj);
-            //chart.ddd(jsonObj)
-            chart.eee(jsonObj)
+        if (topic == "appConnectTempResponse" || topic == "tempSensor") {
+            temp.tempsens(jsonObj);
+            chart.plotTempChart(jsonObj);
         }
     }
 
@@ -143,19 +135,12 @@ var clientMQTT = (function () {
         function alertCallback() {
             console.log("Alert is Dismissed!");
         }
-
-    }
-
-    vibration = function () {
-        var time = 3000;
-        navigator.vibrate(time);
     }
 
     return {
         startMQTT: start,
         isConnected: getConnectionStatus,
         sendMessage: sendMessage,
-        dialogAlert: dialogAlert,
-        vibration: vibration
+        dialogAlert: dialogAlert
     };
 })();

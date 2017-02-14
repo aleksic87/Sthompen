@@ -3,87 +3,30 @@
  */
 
 var chart = (function () {
-    var containerr, payload;
+    var containerrR, payload,timeString,hour,minute,second;
     var inneArray = [60];
     var uteArray = [60];
     var luftArray = [60];
 
-    ddd = function (msg) {
-        payload = msg;
-         containerr = document.getElementById("containerr");
-
-        Highcharts.chart(containerr, {
-            chart: {
-                zoomType: 'x'
-            },
-            title: {
-                text: 'Temperatur senaste 24h'
-            },
-            subtitle: {
-                text: document.ontouchstart === undefined ?
-                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
-            },
-            xAxis: {
-                type: 'Tid'
-            },
-            yAxis: {
-                title: {
-                    text: 'Temp'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
-
-            series: [{
-                type: 'area',
-                name: 'USD to EUR',
-                data: payload
-            }]
-        });
-
-    }
-
-    eee = function(msg) {
+    plotTempChart = function(msg) {
         randomNumbers();
         payload = msg;
         containerrR = document.getElementById("containerrR");
+        timeString = payload.timeQueue[0];
+        var hourIndex = timeString.search("h");
+        var hourString = timeString.substring(hourIndex+1,hourIndex+3);
+        hour = parseInt(hourString);
 
         Highcharts.chart('containerrR', {
             chart: {
-                type: 'area'
+                type: 'area',
+                zoomType: 'xy'
             },
             title: {
                 text: 'Temperatur/Luftfuktighet'
             },
             subtitle: {
-                text: 'Senaste 60h'
+                text: 'Senaste 24h'
             },
             xAxis: {
                 allowDecimals: false,
@@ -104,11 +47,12 @@ var chart = (function () {
                 }
             },
             tooltip: {
-                pointFormat: '{series.name} <b>{point.y:,.0f}</b><br/> {point.x} timmar sedan '
+                pointFormat: '{series.name}: <b>{point.y}</b>'
             },
             plotOptions: {
                 area: {
                     pointStart: 0,
+                    pointInterval: 1/4,
                     marker: {
                         enabled: false,
                         symbol: 'circle',
@@ -124,17 +68,17 @@ var chart = (function () {
             series: [
                 {
                     name: 'Luftfuktighet',
-                    data: luftArray
+                    data: payload.humidityQueue
 
                 },
                 {
                     name: 'Inne',
-                    data: inneArray
+                    data: payload.insideQueue
 
                 },
                 {
                     name: 'Ute',
-                    data: uteArray
+                    data: payload.outsideQueue
                 }]
         });
     }
@@ -163,7 +107,6 @@ var chart = (function () {
     }
 
     return {
-        ddd: ddd,
-        eee: eee
+        plotTempChart: plotTempChart
     };
 })();
