@@ -107,8 +107,7 @@
     "wires": [
       [
         "ea72a107.a4db9",
-        "ac37f1b9.07775",
-        "f7ce0d0b.ac08d"
+        "fe453505.d8b158"
       ]
     ]
   },
@@ -465,7 +464,7 @@
     "y": 1200,
     "wires": [
       [
-        "e2532aa7.f97c18"
+        "476c2ccb.ae5564"
       ],
       [],
       []
@@ -475,14 +474,14 @@
     "id": "86a27cff.00681",
     "type": "inject",
     "z": "98edc158.ad053",
-    "name": "",
+    "name": "read tempsensor",
     "topic": "",
     "payload": "",
     "payloadType": "date",
-    "repeat": "600",
+    "repeat": "900",
     "crontab": "",
     "once": false,
-    "x": 110,
+    "x": 130,
     "y": 1200,
     "wires": [
       [
@@ -501,9 +500,7 @@
     "x": 470,
     "y": 1200,
     "wires": [
-      [
-        "4439ade6.43add4"
-      ]
+      []
     ]
   },
   {
@@ -717,12 +714,12 @@
     "id": "5ac06d75.0a0184",
     "type": "mqtt out",
     "z": "98edc158.ad053",
-    "name": "appConnectPIRResponse",
+    "name": "appConnectTempResponse",
     "topic": "appConnectTempResponse",
     "qos": "",
     "retain": "",
     "broker": "2d24316e.12544e",
-    "x": 650,
+    "x": 660,
     "y": 500,
     "wires": []
   },
@@ -737,10 +734,86 @@
     "x": 270,
     "y": 460,
     "wires": [
+      []
+    ]
+  },
+  {
+    "id": "476c2ccb.ae5564",
+    "type": "function",
+    "z": "98edc158.ad053",
+    "name": "tempSensorTEST",
+    "func": "var date = new Date();\nvar hour = date.getHours();\nvar minute = date.getMinutes();\nvar second = date.getSeconds();\nvar payload = msg.payload;\nvar indexIn = payload.search(\"id=247\");\nvar indexOut = payload.search(\"id=248\");\nvar inside = payload.substring(indexIn);\nvar outside = payload.substring(indexOut);\nvar insideTextIndex = inside.search(\"temperature=\");\nvar insideText = inside.substring(insideTextIndex+12,insideTextIndex+16);\nvar outsideTextIndex = inside.search(\"temperature=\");\nvar outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+16);\nvar humidityTextIndex = inside.search(\"humidity=\");\nvar humidityText = inside.substring(humidityTextIndex+9,humidityTextIndex+11);\n\nif(insideText.substr(insideText.length - 1) == \"\\t\"){\n    insideText = inside.substring(insideTextIndex+12,insideTextIndex+15);\n}\nif(outsideText.substr(outsideText.length - 1) == \"\\t\"){\n    outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+15);\n}\n\nvar insideFloat = parseFloat(insideText);\nvar outsideFloat = parseFloat(outsideText);\nvar humidityFloat = parseFloat(humidityText);\nvar time = \"h\"+hour+\"m\"+minute+\"s\"+second;\nglobal.set(\"insideFloat\",insideFloat);\nglobal.set(\"outsideFloat\",outsideFloat);\nglobal.set(\"humidityFloat\",humidityFloat);\n\nvar insideQueue = global.get(\"insideQueue\");\ninsideQueue.push(insideFloat);\nglobal.set(\"insideQueue\",insideQueue);\nvar outsideQueue = global.get(\"outsideQueue\");\noutsideQueue.push(outsideFloat);\nglobal.set(\"outsideQueue\",outsideQueue);\nvar humidityQueue = global.get(\"humidityQueue\");\nhumidityQueue.push(humidityFloat);\nglobal.set(\"humidityQueue\",humidityQueue);\nvar timeQueue = global.get(\"timeQueue\");\ntimeQueue.push(time);\nglobal.set(\"timeQueue\",timeQueue);\n\n// 1008 = 7days\nif(insideQueue.length > 1008){\n    insideQueue.shift();\n}\nif(outsideQueue.length > 1008){\n    outsideQueue.shift();\n}\nif(humidityQueue.length > 1008){\n    humidityQueue.shift();\n}\nif(timeQueue.length > 1008){\n    timeQueue.shift();\n}\n\nmsg.payload = {\"insideQueue\": global.get(\"insideQueue\"),\n                \"outsideQueue\": global.get(\"outsideQueue\"),\n                \"humidityQueue\": global.get(\"humidityQueue\"),\n                \"timeQueue\": global.get(\"timeQueue\"),\n                \"inside\": global.get(\"insideFloat\"),\n                \"outside\": global.get(\"outsideFloat\"),\n                \"humidity\": global.get(\"humidityFloat\")\n                };\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 490,
+    "y": 1260,
+    "wires": [
+      [
+        "4439ade6.43add4",
+        "3bafd61c.135e8a"
+      ]
+    ]
+  },
+  {
+    "id": "fe453505.d8b158",
+    "type": "function",
+    "z": "98edc158.ad053",
+    "name": "tempTEST",
+    "func": "msg.payload = {\"insideQueue\": global.get(\"insideQueue\"),\n                \"outsideQueue\": global.get(\"outsideQueue\"),\n                \"humidityQueue\": global.get(\"humidityQueue\"),\n                \"timeQueue\": global.get(\"timeQueue\"),\n                \"inside\": global.get(\"insideFloat\"),\n                \"outside\": global.get(\"outsideFloat\"),\n                \"humidity\": global.get(\"humidityFloat\")\n                };\n\nreturn msg;\n",
+    "outputs": "1",
+    "noerr": 0,
+    "x": 290,
+    "y": 500,
+    "wires": [
       [
         "5ac06d75.0a0184"
       ]
     ]
+  },
+  {
+    "id": "457e26dc.a8aae8",
+    "type": "function",
+    "z": "98edc158.ad053",
+    "name": "globals",
+    "func": "var insideQueue = [];\nglobal.set(\"insideQueue\",insideQueue);\nvar outsideQueue = [];\nglobal.set(\"outsideQueue\",outsideQueue);\nvar humidityQueue = [];\nglobal.set(\"humidityQueue\",humidityQueue);\nvar timeQueue = [];\nglobal.set(\"timeQueue\",timeQueue);\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 280,
+    "y": 1360,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "8b9ea07f.19862",
+    "type": "inject",
+    "z": "98edc158.ad053",
+    "name": "reset queues",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "x": 130,
+    "y": 1360,
+    "wires": [
+      [
+        "457e26dc.a8aae8"
+      ]
+    ]
+  },
+  {
+    "id": "3bafd61c.135e8a",
+    "type": "debug",
+    "z": "98edc158.ad053",
+    "name": "",
+    "active": true,
+    "console": "false",
+    "complete": "false",
+    "x": 640,
+    "y": 1360,
+    "wires": []
   },
   {
     "id": "2d24316e.12544e",
