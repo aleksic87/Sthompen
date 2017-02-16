@@ -6,7 +6,7 @@ var clientMQTT = (function () {
     var client;
     var start, onConnect, doFail, sendMessage, onConnectionLost, onMessageArrived, getConnectionStatus, dialogAlert;
     var connected = false;
-
+    
     var clientID = "web" + Math.random();
 
     // connect the client
