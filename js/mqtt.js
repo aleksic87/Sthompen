@@ -8,10 +8,10 @@ var clientMQTT = (function () {
     var connected = false;
 
     // Cloud MQTT settings
-    var hostname = 'm21.cloudmqtt.com';
+    var hostname = '';
     var port = 37354;
-    var username = 'ggsttchk';
-    var password = 'uQnoGIer-6l4';
+    var username = '';
+    var password = '';
 
     var clientID = "web" + Math.random();
 
