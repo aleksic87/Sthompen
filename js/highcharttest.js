@@ -9,13 +9,12 @@ var chart = (function () {
     var luftArray = [60];
 
     plotTempChart = function(msg) {
-        randomNumbers();
         payload = msg;
         containerrR = document.getElementById("containerrR");
-        timeString = payload.timeQueue[0];
-        var hourIndex = timeString.search("h");
-        var hourString = timeString.substring(hourIndex+1,hourIndex+3);
-        hour = parseInt(hourString);
+        //timeString = payload.timeQueue[0];
+        //var hourIndex = timeString.search("h");
+        //var hourString = timeString.substring(hourIndex+1,hourIndex+3);
+        //hour = parseInt(hourString);
 
         Highcharts.chart('containerrR', {
             chart: {

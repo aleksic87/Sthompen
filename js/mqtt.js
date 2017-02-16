@@ -7,23 +7,18 @@ var clientMQTT = (function () {
     var start, onConnect, doFail, sendMessage, onConnectionLost, onMessageArrived, getConnectionStatus, dialogAlert;
     var connected = false;
 
-    // Cloud MQTT settings
-    var hostname = 'm21.cloudmqtt.com';
-    var port = 37354;
-    var username = 'ggsttchk';
-    var password = 'uQnoGIer-6l4';
-
     var clientID = "web" + Math.random();
 
     // connect the client
     start = function () {
-        client = new Paho.MQTT.Client(hostname, port, clientID);
+        var mqttCred = mqttCredentials.getmqttCred();
+        client = new Paho.MQTT.Client(mqttCred.hostname, mqttCred.port, clientID);
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
         var options = {
             useSSL: true,
-            userName: username,
-            password: password,
+            userName: mqttCred.username,
+            password: mqttCred.password,
             onSuccess: onConnect,
             onFailure: doFail
         };
