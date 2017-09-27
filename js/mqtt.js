@@ -6,7 +6,6 @@ var clientMQTT = (function () {
     var client;
     var start, onConnect, doFail, sendMessage, onConnectionLost, onMessageArrived, getConnectionStatus, dialogAlert;
     var connected = false;
-    
     var clientID = "web" + Math.random();
 
     // connect the client
@@ -47,6 +46,7 @@ var clientMQTT = (function () {
         document.getElementById("vardagsrum2Dim").addEventListener("click", led.toggleLedVardagsrum2Dim);
         document.getElementById("sovrum").addEventListener("change", led.toggleLedSovrum);
         document.getElementById("gastrum").addEventListener("change", led.toggleLedGastrum);
+        vasttrafikObj.getGoogleMap();
 
         //Init sensor status
         var obj = JSON.parse(0);
@@ -74,17 +74,22 @@ var clientMQTT = (function () {
         var newMsg = JSON.stringify(obj);
         var message = new Paho.MQTT.Message(newMsg);
         message.destinationName = topic;
-        debugLogger.debugLog("Send message to MQTT: " + topic + " : " + payload);
+        //debugLogger.debugLog("Send message to MQTT: " + topic + " : " + payload);
         client.send(message);
+        var modal = document.querySelector('ons-modal');
+        modal.show();
+        setTimeout(function() {
+            modal.hide();
+        }, 1500);
     };
 
     // called when the client loses its connection
     onConnectionLost = function (responseObject) {
         connected=false;
-        debugLogger.debugLog("Lost connection with MQTT");
         console.log("Lost connection with MQTT");
         if (responseObject.errorCode !== 0) {
             console.log("Lost connection with MQTT" + JSON.stringify(responseObject));
+            debugLogger.debugLog("Lost connection with MQTT" + JSON.stringify(responseObject));
         }
         clientMQTT.startMQTT();
     };
@@ -95,16 +100,20 @@ var clientMQTT = (function () {
         var jsonObj = $.parseJSON(payload);
         topic = message.destinationName;
         //debugLogger.debugLog("Receive message from MQTT: " + topic + " : " + payload);
-        if (topic == "appConnectLEDResponse" || topic == "liveUpdateLeds") {
+        if (topic == "appConnectLEDResponse") {
             led.updateLedStatus(jsonObj);
             var modal = document.querySelector('ons-modal');
             setTimeout(function() {
                 modal.hide();
-            }, 600);
+            }, 300);
         }
         if (topic == "appConnectTempResponse" || topic == "tempSensor") {
             temp.tempsens(jsonObj);
-            chart.plotTempChart(jsonObj);
+            chart.plotOutsideTempChart(jsonObj);
+            chart.plotInsideTempChart(jsonObj);
+            chart.plotHumidityTempChart(jsonObj);
+            //chart.plotTimeChart(jsonObj);
+            //chart.plotPieChart3D(jsonObj);
         }
     }
 
@@ -118,24 +127,9 @@ var clientMQTT = (function () {
         return connected;
     };
 
-    dialogAlert = function () {
-        var message = "I am Alert Dialog!";
-        var title = "ALERT";
-        var buttonName = "Alert Button";
-
-        if(navigator.notification)
-            navigator.notification.alert(message, alertCallback, title, buttonName);
-        else
-            alert("HEJ");
-        function alertCallback() {
-            console.log("Alert is Dismissed!");
-        }
-    }
-
     return {
         startMQTT: start,
         isConnected: getConnectionStatus,
-        sendMessage: sendMessage,
-        dialogAlert: dialogAlert
+        sendMessage: sendMessage
     };
 })();
