@@ -21,6 +21,9 @@
 <!-- Plotly.js -->
 <script src="libs/plotly-latest.min.js"></script>
 <script src="libs/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js" />
 
 <!-- Google charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -31,6 +34,8 @@
 <script src="js/plot.js"></script>
 <script src="js/highcharttest.js"></script>
 <script src="js/temp.js"></script>
+<script src="js/vasttrafikAPI.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0VjnL5ylVwKaf5jII1hDpLDzt90Pq-KM"></script>
 
 <!-- Style -->
 <link rel="stylesheet" type="text/css" href="css/style.css"/>
@@ -50,7 +55,9 @@
     </ons-tab>
     <ons-tab icon="ion-stats-bars" label="Grafer" page="tab2.html">
     </ons-tab>
-    <ons-tab icon="ion-levels" label="Debug" page="tab3.html">
+    <ons-tab icon="ion-android-train" label="Spårvagn" page="tab3.html">
+    </ons-tab>
+    <ons-tab icon="ion-levels" label="Debug" page="tab4.html">
     </ons-tab>
 </ons-tabbar>
 
@@ -60,14 +67,21 @@
         <ons-toolbar>
             <div class="center">Hem</div>
         </ons-toolbar>
+<!--
+        <div id="login" style="text-align: center; margin-top: 30px;">
+            <p>
+                <ons-input id="password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+            </p>
+            <p style="margin-top: 30px;">
+                <ons-button onclick="mqttCredentials.passwordLogin()">Logga in</ons-button>
+                <br>
+                <br>
+                <span id="wrongPW" style="text-align: center; display: none; color:red;font-size:36px;">Fel lösenord!</span>
+            </p>
 
-        <p style="text-align: center;">
-        <div id="title">
         </div>
-        <br>
-        </p>
-        <ons-list>
-            <ons-list-header>Lampor</ons-list-header>
+-->
+        <ons-list id="list" style="display: block">
             <ons-list-item>
                 <div class="center">
                     Alla lampor
@@ -113,7 +127,7 @@
                 </div>
             </ons-list-item>
         </ons-list>
-        <div class="center" style="text-align: center">
+        <div class="center" id="tempclass" style="text-align: center; display: block;">
             <span id="degreesInLabel" align="center">Inne</span>
             <span id="degreesInside" align="center">23</span>
             <span id="celciusIn" align="center">℃</span>
@@ -135,12 +149,41 @@
         <ons-toolbar>
             <div class="center">Grafer</div>
         </ons-toolbar>
-        <div id="containerrR" style="width:100%; height:400px;">hej</div>
+        <canvas id="insideTempChart"></canvas>
+        <br>
+        <canvas id="outsideTempChart"></canvas>
+        <br>
+        <canvas id="humidityChart"></canvas>
     </ons-page>
 </ons-template>
 
 <!-- Debug -->
 <ons-template id="tab3.html">
+    <ons-page>
+        <ons-toolbar>
+            <div class="center">Spårvagn</div>
+        </ons-toolbar>
+        <br>
+        <div id="vasttrafikFromSvingeln" style="text-align: left; margin-top: 10px;">
+            <ons-button onclick="vasttrafikObj.requestVapi()">Refresh</ons-button>
+
+            <div id="vasttrafikApi" style="text-align: left; margin-top: 10px;">
+                <span id="fromSvingelnTitle">Från svingeln: </span><br>
+            </div>
+        </div>
+        <br>
+        <div id="location" style="text-align: left; margin-top: 10px;">
+            <ons-button onclick="vasttrafikObj.getGoogleLocation()">Min plats</ons-button>
+
+            <div id="myPlace" style="text-align: left; margin-top: 10px;">
+                <div id="map"; style="background-color: #2d2d2d; width:100%; height:400px;"></div>
+            </div>
+        </div>
+    </ons-page>
+</ons-template>
+
+<!-- Debug -->
+<ons-template id="tab4.html">
     <ons-page>
         <ons-toolbar>
             <div class="center">Debug</div>
