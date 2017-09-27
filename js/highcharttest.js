@@ -3,109 +3,285 @@
  */
 
 var chart = (function () {
-    var containerrR, payload,timeString,hour,minute,second;
-    var inneArray = [60];
-    var uteArray = [60];
-    var luftArray = [60];
+    var containerrR,containerrRR,timeChart,pieChart3D,pieChart3D2, payload,timeString,hour,minute,second;
 
-    plotTempChart = function(msg) {
+    plotInsideTempChart = function(msg) {
+        payload = msg;
+        containerrR = document.getElementById("containerrRR");
+        var CHART_LENGTH = 25;
+        var labelsFromPsql = new Array(CHART_LENGTH);
+        var invertedDataInside = new Array(CHART_LENGTH);
+        var i = 0;
+        for(i ; i<labelsFromPsql.length; i++){
+            labelsFromPsql[i] = i;
+        }
+        var index = 0;
+        var j = 1;
+        for(index ; j<=CHART_LENGTH; index++){
+            invertedDataInside[index] = payload.insideQueue[payload.insideQueue.length-j];
+            j++;
+        }
+
+        var ctx = document.getElementById('insideTempChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: labelsFromPsql,
+                datasets: [{
+                    label: "Innetemperatur senaste 24h",
+                    backgroundColor: 'rgb(124, 19, 19)',
+                    borderColor: 'rgb(110, 15, 15)',
+                    data: invertedDataInside,
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    }
+
+        plotOutsideTempChart = function(msg) {
         payload = msg;
         containerrR = document.getElementById("containerrR");
-        //timeString = payload.timeQueue[0];
-        //var hourIndex = timeString.search("h");
-        //var hourString = timeString.substring(hourIndex+1,hourIndex+3);
-        //hour = parseInt(hourString);
+        var CHART_LENGTH = 25;
+        var labelsFromPsql = new Array(CHART_LENGTH);
+        var invertedDataOutside = new Array(CHART_LENGTH);
+        var i = 0;
+        for(i ; i<labelsFromPsql.length; i++){
+            labelsFromPsql[i] = i;
+        }
+        var index = 0;
+        var j = 1;
+        for(index ; j<=CHART_LENGTH; index++){
+            invertedDataOutside[index] = payload.outsideQueue[payload.outsideQueue.length-j];
+            j++;
+        }
 
-        Highcharts.chart('containerrR', {
+        var ctx = document.getElementById('outsideTempChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: labelsFromPsql,
+                datasets: [{
+                    label: "Utetemperatur senaste 24h",
+                    backgroundColor: 'rgb(115, 161, 240)',
+                    borderColor: 'rgb(53, 121, 239)',
+                    data: invertedDataOutside,
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    }
+
+        plotHumidityTempChart = function(msg) {
+        payload = msg;
+        containerrR = document.getElementById("containerrR");
+        var CHART_LENGTH = 25;
+        var labelsFromPsql = new Array(CHART_LENGTH);
+        var invertedDataHumidity = new Array(CHART_LENGTH);
+        var i = 0;
+        for(i ; i<labelsFromPsql.length; i++){
+            labelsFromPsql[i] = i;
+        }
+        var index = 0;
+        var j = 1;
+        for(index ; j<=CHART_LENGTH; index++){
+            invertedDataHumidity[index] = payload.humidityQueue[payload.humidityQueue.length-j];
+            j++;
+        }
+
+        var ctx = document.getElementById('humidityChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: labelsFromPsql,
+                datasets: [{
+                    label: "Luftfuktighet senaste 24h",
+                    backgroundColor: 'rgb(88, 200, 200)',
+                    borderColor: 'rgb(70, 157, 164)',
+                    data: invertedDataHumidity,
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    }
+
+    plotTimeChart = function(msg) {
+        payload = msg;
+        timeChart = document.getElementById("timeChart");
+
+        Highcharts.chart('timeChart', {
             chart: {
-                type: 'area',
-                zoomType: 'xy'
+                type: 'column'
             },
             title: {
-                text: 'Temperatur/Luftfuktighet'
-            },
-            subtitle: {
-                text: 'Senaste 24h'
+                text: 'Temperatur/Tid'
             },
             xAxis: {
-                allowDecimals: false,
+                type: 'category',
                 labels: {
-                    formatter: function () {
-                        return this.value;
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
                     }
                 }
             },
             yAxis: {
+                min: -10,
                 title: {
-                    text: 'Temp/%'
-                },
-                labels: {
-                    formatter: function () {
-                        return this.value;
-                    }
+                    text: 'Temp'
                 }
+            },
+            legend: {
+                enabled: false
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.y}</b>'
+                pointFormat: 'Temperatur: <b>{point.y:.1f} grader</b>'
             },
-            plotOptions: {
-                area: {
-                    pointStart: 0,
-                    pointInterval: 1/4,
-                    marker: {
-                        enabled: false,
-                        symbol: 'circle',
-                        radius: 2,
-                        states: {
-                            hover: {
-                                enabled: true
-                            }
-                        }
+            series: [{
+                name: 'Population',
+                data: [
+                    [payload.timeQueue[1100], payload.outsideQueue[1100]],
+                    [payload.timeQueue[1101], payload.outsideQueue[1101]],
+                    [payload.timeQueue[1102], payload.outsideQueue[1102]],
+                    [payload.timeQueue[1103], payload.outsideQueue[1103]],
+                    [payload.timeQueue[1104], payload.outsideQueue[1104]],
+                    [payload.timeQueue[1105], payload.outsideQueue[1105]],
+                    [payload.timeQueue[1106], payload.outsideQueue[1106]],
+                    [payload.timeQueue[1107], payload.outsideQueue[1107]],
+                    [payload.timeQueue[1108], payload.outsideQueue[1108]],
+                    [payload.timeQueue[1109], payload.outsideQueue[1109]],
+                    [payload.timeQueue[1110], payload.outsideQueue[1110]],
+                    [payload.timeQueue[1111], payload.outsideQueue[1111]]
+                ],
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.1f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
                     }
                 }
-            },
-            series: [
-                {
-                    name: 'Luftfuktighet',
-                    data: payload.humidityQueue
-
-                },
-                {
-                    name: 'Inne',
-                    data: payload.insideQueue
-
-                },
-                {
-                    name: 'Ute',
-                    data: payload.outsideQueue
-                }]
+            }]
         });
     }
 
-    function randomIntFromInterval(min,max) {
-        return Math.floor(Math.random()*(max-min+1)+min);
+    plotPieChart3D = function(msg) {
+        payload = msg;
+        pieChart3D = document.getElementById("pieChart3D");
+
+        Highcharts.chart('pieChart3D', {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45,
+                    beta: 0
+                }
+            },
+            title: {
+                text: 'Temperatur/Luftfuktighet'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 45,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['Luftfuktighet', payload.humidity],
+                    ['Inne', payload.inside],
+                    {
+                        name: 'Ute',
+                        y: payload.outside,
+                        sliced: true,
+                        selected: true
+                    }
+                ]
+            }]
+        });
     }
+    plotPieChart3D2 = function(msg) {
+        payload = msg;
+        pieChart3D2 = document.getElementById("pieChart3D2");
 
-    randomNumbers = function(){
-        (Math.floor(Math.random() * 25) + 18  ); // Inne
-        (Math.floor(Math.random() * 8) + 1  ); // Ute
-        (Math.floor(Math.random() * 38) + 22  ); // Luft
-
-        for(i=0; i<60; i++){
-            tempVal = randomIntFromInterval(19,24); // Inne
-            inneArray[i] = tempVal;
-        }
-        for(j=0; j<60; j++){
-            tempVal = randomIntFromInterval(1,12); // Ute
-            uteArray[j] = tempVal;
-        }
-        for(k=0; k<60; k++){
-            tempVal = randomIntFromInterval(24,35); // Luft
-            luftArray[k] = tempVal;
-        }
+        Highcharts.chart('pieChart3D2', {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45,
+                    beta: 0
+                }
+            },
+            title: {
+                text: 'Temperatur/Luftfuktighet'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 45,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['Luftfuktighet', payload.humidity],
+                    ['Inne', payload.inside],
+                    {
+                        name: 'Ute',
+                        y: payload.outside,
+                        sliced: true,
+                        selected: true
+                    }
+                ]
+            }]
+        });
     }
-
     return {
-        plotTempChart: plotTempChart
+        plotOutsideTempChart: plotOutsideTempChart,
+        plotInsideTempChart: plotInsideTempChart,
+        plotHumidityTempChart: plotHumidityTempChart,
+        plotTimeChart: plotTimeChart,
+        plotPieChart3D: plotPieChart3D,
+        plotPieChart3D2: plotPieChart3D2
     };
 })();
