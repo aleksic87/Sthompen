@@ -1,33 +1,71 @@
 [
     {
-        "id": "f4abe5fe.338458",
-        "type": "rpi-gpio in",
-        "z": "98edc158.ad053",
-        "name": "PIR",
-        "pin": "7",
-        "intype": "tri",
-        "debounce": "25",
-        "read": false,
-        "x": 434,
-        "y": 331,
-        "wires": [
-            [
-                "a927bf23.e36c7"
-            ]
-        ]
+        "id": "98edc158.ad053",
+        "type": "tab",
+        "label": "Flow 1"
     },
     {
-        "id": "dba7b7c9.a629a8",
-        "type": "mqtt out",
-        "z": "98edc158.ad053",
-        "name": "motionstatus",
-        "topic": "motionstatus",
-        "qos": "",
-        "retain": "",
-        "broker": "2d24316e.12544e",
-        "x": 914,
-        "y": 331,
-        "wires": []
+        "id": "f8fd913.3d2cc7",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "m21.cloudmqtt.com",
+        "port": "17354",
+        "clientid": "client123",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "f708010.184cb",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "m21.cloudmqtt.com",
+        "port": "17354",
+        "clientid": "client123",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "2d24316e.12544e",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "m20.cloudmqtt.com",
+        "port": "13497",
+        "clientid": "client12345",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "253ab5f4.36337a",
+        "type": "postgresdb",
+        "z": "",
+        "hostname": "localhost",
+        "port": "5432",
+        "db": "shpdb",
+        "ssl": false
     },
     {
         "id": "691526f4.60b108",
@@ -43,22 +81,6 @@
             [
                 "111d59a3.5e0266",
                 "ed118ad6.690b48"
-            ]
-        ]
-    },
-    {
-        "id": "a927bf23.e36c7",
-        "type": "function",
-        "z": "98edc158.ad053",
-        "name": "pir value",
-        "func": "//var array = ();\nglobal.set(\"newPIRStatus\",msg.payload);\n\n\n//global.set(\"00\",msg.payload);\n\n\nreturn msg;",
-        "outputs": "1",
-        "noerr": 0,
-        "x": 604,
-        "y": 331,
-        "wires": [
-            [
-                "dba7b7c9.a629a8"
             ]
         ]
     },
@@ -83,7 +105,7 @@
         "type": "function",
         "z": "98edc158.ad053",
         "name": "led",
-        "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
+        "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\"),\n                \"autotimer\": global.get(\"autotimerStatus\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
         "outputs": "1",
         "noerr": 0,
         "x": 574,
@@ -137,20 +159,6 @@
         "x": 954,
         "y": 471,
         "wires": []
-    },
-    {
-        "id": "95780c2e.1e05c",
-        "type": "function",
-        "z": "98edc158.ad053",
-        "name": "PIR",
-        "func": "global.set(\"00\",1)\nglobal.set(\"14\",1)\n\ndata = ([\n        [\"00\", global.get(\"00\")],\n        [\"01\", 0],\n        [\"02\", 0],\n        [\"03\", 0],\n        [\"04\", 0],\n        [\"05\", 0],\n        [\"06\", 0],\n        [\"07\", 0],\n        [\"08\", 0],\n        [\"09\", 0],\n        [\"10\", 1],\n        [\"11\", 0],\n        [\"12\", 1],\n        [\"13\", 1],\n        [\"14\", global.get(\"14\")],\n        [\"15\", 0],\n        [\"16\", 0],\n        [\"17\", 0],\n        [\"18\", 0],\n        [\"19\", 1],\n        [\"20\", 1],\n        [\"21\", 1],\n        [\"22\", 0],\n        [\"23\", 0]\n        ]);\n\nmsg.payload = data;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 574,
-        "y": 451,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "3f4704d2.845a6c",
@@ -666,18 +674,11 @@
         "repeat": "",
         "crontab": "00 22 * * 1,2,3,4,0",
         "once": false,
-        "x": 239,
-        "y": 918,
+        "x": 141,
+        "y": 920,
         "wires": [
             [
-                "bc88c06c.06b7a",
-                "c9045fb9.e8b6c",
-                "806d6dbc.9278d",
-                "111d59a3.5e0266",
-                "ad6993e2.333e5",
-                "e617e745.b2acc8",
-                "e5fff7f.0318b08",
-                "d785029d.a94ba"
+                "8d9623c9.33f2b"
             ]
         ]
     },
@@ -690,18 +691,13 @@
         "payload": "1",
         "payloadType": "str",
         "repeat": "",
-        "crontab": "00 18 * * 1,2,3,4,0",
+        "crontab": "30 16 * * 1,2,3,4,0",
         "once": false,
-        "x": 255,
-        "y": 842,
+        "x": 162,
+        "y": 819,
         "wires": [
             [
-                "44dee912.b7d6e8",
-                "bc88c06c.06b7a",
-                "3f4704d2.845a6c",
-                "111d59a3.5e0266",
-                "26bcbd05.1231a2",
-                "e617e745.b2acc8"
+                "b98a6243.d7978"
             ]
         ]
     },
@@ -717,20 +713,6 @@
         "x": 964,
         "y": 531,
         "wires": []
-    },
-    {
-        "id": "f7ce0d0b.ac08d",
-        "type": "function",
-        "z": "98edc158.ad053",
-        "name": "temp",
-        "func": "\nglobal.set(\"temp1\",\"23\")\nglobal.set(\"temp2\",\"13\")\nglobal.set(\"temp3\",\"22\")\nglobal.set(\"temp4\",\"15\")\nglobal.set(\"temp5\",\"9\")\nvar a = parseInt(global.get(\"temp1\"))\nvar b = parseInt(global.get(\"temp2\"))\nvar c = parseInt(global.get(\"temp3\"))\nvar d = parseInt(global.get(\"temp4\"))\nvar e = parseInt(global.get(\"temp5\"))\n\nmsg.payload = [a,b,c,d,e]\n\nreturn msg;\n",
-        "outputs": "1",
-        "noerr": 0,
-        "x": 574,
-        "y": 491,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "476c2ccb.ae5564",
@@ -755,11 +737,11 @@
         "id": "fe453505.d8b158",
         "type": "function",
         "z": "98edc158.ad053",
-        "name": "tempTEST",
+        "name": "temp",
         "func": "msg.payload = {\"insideQueue\": global.get(\"insideQueue\"),\n                \"outsideQueue\": global.get(\"outsideQueue\"),\n                \"humidityQueue\": global.get(\"humidityQueue\"),\n                \"timeQueue\": global.get(\"timeQueue\"),\n                \"inside\": global.get(\"insideFloat\"),\n                \"outside\": global.get(\"outsideFloat\"),\n                \"humidity\": global.get(\"humidityFloat\")\n                };\n\nreturn msg;\n\n",
         "outputs": "1",
         "noerr": 0,
-        "x": 614,
+        "x": 594,
         "y": 531,
         "wires": [
             [
@@ -1023,9 +1005,7 @@
         "x": 844,
         "y": 1511,
         "wires": [
-            [
-                "d66773c6.7ccf8"
-            ]
+            []
         ]
     },
     {
@@ -1250,16 +1230,11 @@
         "repeat": "",
         "crontab": "00 07 * * 1,2,3,4,5",
         "once": false,
-        "x": 249,
-        "y": 734,
+        "x": 174,
+        "y": 733,
         "wires": [
             [
-                "e617e745.b2acc8",
-                "bc88c06c.06b7a",
-                "26bcbd05.1231a2",
-                "44dee912.b7d6e8",
-                "873d11d2.27653",
-                "e5fff7f.0318b08"
+                "b34af797.8c3fb8"
             ]
         ]
     },
@@ -1274,16 +1249,11 @@
         "repeat": "",
         "crontab": "30 08 * * 1,2,3,4,5",
         "once": false,
-        "x": 249,
-        "y": 651,
+        "x": 180,
+        "y": 656,
         "wires": [
             [
-                "e617e745.b2acc8",
-                "ad6993e2.333e5",
-                "c9045fb9.e8b6c",
-                "bc88c06c.06b7a",
-                "e5fff7f.0318b08",
-                "d785029d.a94ba"
+                "4359d2bf.0cb07c"
             ]
         ]
     },
@@ -1357,30 +1327,177 @@
         ]
     },
     {
-        "id": "2d24316e.12544e",
-        "type": "mqtt-broker",
-        "z": "",
-        "broker": "m20.cloudmqtt.com",
-        "port": "13497",
-        "clientid": "client12345",
-        "usetls": false,
-        "compatmode": true,
-        "keepalive": "60",
-        "cleansession": true,
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": ""
+        "id": "6aa22675.a25148",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "BUGG golvlampa...",
+        "func": "if(global.get(\"ledStatusVardagsrum2\") === \"0\"){\n    msg.payload = \"1\";\n}\nelse{\n    return null;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 221.5,
+        "y": 883,
+        "wires": [
+            [
+                "3e94d5e0.39918a"
+            ]
+        ]
     },
     {
-        "id": "253ab5f4.36337a",
-        "type": "postgresdb",
-        "z": "",
-        "hostname": "localhost",
-        "port": "5432",
-        "db": "shpdb",
-        "ssl": false
+        "id": "d837fc03.e1521",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 94.5,
+        "y": 882,
+        "wires": [
+            [
+                "6aa22675.a25148"
+            ]
+        ]
+    },
+    {
+        "id": "3e94d5e0.39918a",
+        "type": "debug",
+        "z": "98edc158.ad053",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 361.5,
+        "y": 883,
+        "wires": []
+    },
+    {
+        "id": "4359d2bf.0cb07c",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 374,
+        "y": 657,
+        "wires": [
+            [
+                "730688c8.9ff428",
+                "d785029d.a94ba",
+                "e5fff7f.0318b08",
+                "bc88c06c.06b7a",
+                "c9045fb9.e8b6c",
+                "ad6993e2.333e5",
+                "e617e745.b2acc8"
+            ]
+        ]
+    },
+    {
+        "id": "730688c8.9ff428",
+        "type": "debug",
+        "z": "98edc158.ad053",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 377.5,
+        "y": 607,
+        "wires": []
+    },
+    {
+        "id": "51dc37f0.83f338",
+        "type": "mqtt in",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "autotimer",
+        "qos": "2",
+        "broker": "2d24316e.12544e",
+        "x": 99,
+        "y": 503,
+        "wires": [
+            [
+                "c231cfbd.30a86"
+            ]
+        ]
+    },
+    {
+        "id": "c231cfbd.30a86",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "global.set(\"newAutotimerStatus\",msg.payload);\n\nif(global.get(\"autotimerStatus\") != global.get(\"newAutotimerStatus\")){\n    global.set(\"autotimerStatus\",global.get(\"newAutotimerStatus\"));\n    msg.payload = global.get(\"autotimerStatus\");\n}\nelse{\n    msg.payload = global.get(\"autotimerStatus\");\n}\n\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 281,
+        "y": 509,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b34af797.8c3fb8",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 376,
+        "y": 733,
+        "wires": [
+            [
+                "e5fff7f.0318b08",
+                "873d11d2.27653",
+                "44dee912.b7d6e8",
+                "bc88c06c.06b7a",
+                "26bcbd05.1231a2",
+                "e617e745.b2acc8"
+            ]
+        ]
+    },
+    {
+        "id": "8d9623c9.33f2b",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 318,
+        "y": 920,
+        "wires": [
+            [
+                "ad6993e2.333e5",
+                "e617e745.b2acc8",
+                "c9045fb9.e8b6c",
+                "bc88c06c.06b7a",
+                "d785029d.a94ba",
+                "e5fff7f.0318b08",
+                "111d59a3.5e0266",
+                "806d6dbc.9278d"
+            ]
+        ]
+    },
+    {
+        "id": "b98a6243.d7978",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 374,
+        "y": 818,
+        "wires": [
+            [
+                "44dee912.b7d6e8",
+                "bc88c06c.06b7a",
+                "3f4704d2.845a6c",
+                "111d59a3.5e0266"
+            ]
+        ]
     }
 ]
