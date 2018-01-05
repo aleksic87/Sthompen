@@ -39,6 +39,7 @@ var clientMQTT = (function () {
         client.subscribe("appConnectPIRResponse",0);
         client.subscribe("appConnectTempResponse",0);
         client.subscribe("liveUpdateLeds",0);
+        document.getElementById("autotimer").addEventListener("change", led.toggleAutotimer);
         document.getElementById("allaLamporOFF").addEventListener("click", led.toggleLedAllaLamporOFF);
         document.getElementById("allaLamporON").addEventListener("click", led.toggleLedAllaLamporON);
         document.getElementById("vardagsrum").addEventListener("change", led.toggleLedVardagsrum);

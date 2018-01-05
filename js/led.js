@@ -4,7 +4,7 @@
 
 var led = (function () {
 
-    var vardagsrumStatus,vardagsrum2Status,gastrumStatus,sovrumStatus,allaLamporStatus;
+    var vardagsrumStatus,vardagsrum2Status,gastrumStatus,sovrumStatus,allaLamporStatus,autotimerStatus;
 
     allaLamporON = function () {
         allaLamporStatus = "1";
@@ -82,7 +82,16 @@ var led = (function () {
         clientMQTT.sendMessage("gastrum", gastrumStatus);
     };
 
-    //{ "ledVardagsrum": "0", "ledGastrum": "1" }
+    autotimer = function () {
+        if(event.value){
+            status = "1";
+        }
+        else{
+            status = "0";
+        }
+        clientMQTT.sendMessage("autotimer", status);
+    };
+
     updateStatus = function (ledStatus) {
         if(ledStatus.ledVardagsrum == "0"){
             document.getElementById('vardagsrum').checked = false;
@@ -116,6 +125,14 @@ var led = (function () {
             document.getElementById('sovrum').checked = true;
             sovrumStatus = "1";
         }
+        if(ledStatus.autotimer == "0"){
+            document.getElementById('autotimer').checked = false;
+            autotimerStatus = "0";
+        }
+        else{
+            document.getElementById('autotimer').checked = true;
+            autotimerStatus = "1";
+        }
     };
 
     return {
@@ -126,6 +143,7 @@ var led = (function () {
         toggleLedVardagsrum2Dim: vardagsrum2Dim,
         toggleLedSovrum: sovrum,
         toggleLedGastrum: gastrum,
+        toggleAutotimer: autotimer,
         updateLedStatus: updateStatus
     };
 })();
