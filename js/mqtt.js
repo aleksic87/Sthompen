@@ -36,7 +36,7 @@ var clientMQTT = (function () {
         client.subscribe("motionstatus",0);
         client.subscribe("led",0);
         client.subscribe("appConnectLEDResponse",0);
-        client.subscribe("appConnectPIRResponse",0);
+        client.subscribe("appConnectSunResponse",0);
         client.subscribe("appConnectTempResponse",0);
         client.subscribe("liveUpdateLeds",0);
         document.getElementById("autotimer").addEventListener("change", led.toggleAutotimer);
@@ -108,13 +108,22 @@ var clientMQTT = (function () {
                 modal.hide();
             }, 300);
         }
-        if (topic == "appConnectTempResponse" || topic == "tempSensor") {
+        else if (topic == "appConnectTempResponse" || topic == "tempSensor") {
             temp.tempsens(jsonObj);
             chart.plotOutsideTempChart(jsonObj);
             chart.plotInsideTempChart(jsonObj);
             chart.plotHumidityTempChart(jsonObj);
-            //chart.plotTimeChart(jsonObj);
-            //chart.plotPieChart3D(jsonObj);
+        }
+        else if (topic == "appConnectSunResponse") {
+            if(jsonObj.sunriseMinute.length == 1)
+                var sunriseVal = "0" + jsonObj.sunriseHour + ":" + jsonObj.sunriseMinute;
+            // Add second number if minute is below 10
+            else
+                var sunriseVal = "0" + jsonObj.sunriseHour + ":" + "0" + jsonObj.sunriseMinute;
+            document.getElementById("sunriseValue").innerHTML = sunriseVal;
+
+            var sunsetVal = jsonObj.sunsetHour + ":" + jsonObj.sunsetMinute;
+            document.getElementById("sunsetValue").innerHTML = sunsetVal;
         }
     }
 
