@@ -115,7 +115,7 @@ var clientMQTT = (function () {
             chart.plotHumidityTempChart(jsonObj);
         }
         else if (topic == "appConnectSunResponse") {
-            if(jsonObj.sunriseMinute.length == 1)
+            if(jsonObj.sunriseMinute > 9)
                 var sunriseVal = "0" + jsonObj.sunriseHour + ":" + jsonObj.sunriseMinute;
             // Add second number if minute is below 10
             else
