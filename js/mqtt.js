@@ -33,7 +33,7 @@ var clientMQTT = (function () {
         console.log('Connected with MQTT');
         client.subscribe("listen",0);
         client.subscribe("tempSensor",0);
-        client.subscribe("motionstatus",0);
+        //client.subscribe("motionstatus",0);
         client.subscribe("led",0);
         client.subscribe("appConnectLEDResponse",0);
         client.subscribe("appConnectSunResponse",0);
@@ -100,7 +100,7 @@ var clientMQTT = (function () {
         payload = message.payloadString;
         var jsonObj = $.parseJSON(payload);
         topic = message.destinationName;
-        debugLogger.debugLog("Receive message from MQTT: " + topic + " : " + payload);
+        //debugLogger.debugLog("Receive message from MQTT: " + topic + " : " + payload);
         if (topic == "appConnectLEDResponse") {
             led.updateLedStatus(jsonObj);
             var modal = document.querySelector('ons-modal');
@@ -119,7 +119,7 @@ var clientMQTT = (function () {
         }
     }
 
-    getConnectionStatus = function () {
+    /*getConnectionStatus = function () {
         if(connected) {
             document.getElementById("isConnected").innerHTML = "Sann";
         }
@@ -127,11 +127,11 @@ var clientMQTT = (function () {
             document.getElementById("isConnected").innerHTML = "Falsk";
         }
         return connected;
-    };
+    };*/
 
     return {
         startMQTT: start,
-        isConnected: getConnectionStatus,
         sendMessage: sendMessage
+        //isConnected: getConnectionStatus
     };
 })();

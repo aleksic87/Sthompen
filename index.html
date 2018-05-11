@@ -6,6 +6,8 @@
 <script src="libs/jquery-3.1.1.min.js"></script>
 <!-- <script src="libs/angular.min.js"></script> -->
 
+<script src="page1.html"></script>
+
 <!-- MQTT -->
 <script src="libs/mqttws31.js"></script>
 <script src="js/mqtt.js"></script>
@@ -18,19 +20,15 @@
 <link rel="stylesheet" href="onsenui/css/onsen-css-components.css"/>
 <script src="onsenui/js/onsenui.js"></script>
 
-<!-- Plotly.js -->
-<script src="libs/plotly-latest.min.js"></script>
+<!-- Hihgcharts -->
 <script src="libs/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js" />
 
 <!-- Google charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <!-- Sensors -->
-<script src="js/pir.js"></script>
 <script src="js/led.js"></script>
-<script src="js/plot.js"></script>
 <script src="js/highcharttest.js"></script>
 <script src="js/temp.js"></script>
 <script src="js/sun.js"></script>
@@ -175,15 +173,33 @@
         <ons-toolbar>
             <div class="center">Spårvagn</div>
         </ons-toolbar>
+        <img src="img/vasttrafik_logo.jpg">
         <br>
         <div id="vasttrafikFromSvingeln" style="text-align: left; margin-top: 10px;">
-            <ons-button onclick="vasttrafikObj.requestVapi()">Refresh</ons-button>
+            <!--<ons-button onclick="vasttrafikObj.requestVapi()">Refresh</ons-button>-->
 
             <div id="vasttrafikApi" style="text-align: left; margin-top: 10px;">
                 <span id="fromSvingelnTitle">Från svingeln: </span><br>
             </div>
         </div>
+        <!-- TEST START -->
         <br>
+
+        <ons-button onclick="showPopover(this)">Svingeln</ons-button>
+
+        <ons-popover direction="up" id="popover" cancelable="true" cover-target="true" style="margin-top: 25px; max-width: 100%; ">
+          <div style="padding: 10px; text-align: center;">
+            <p id="tramsPopover">
+            </p>
+                <!-- Trams will be placed here -->
+            <p>
+              <ons-button onclick="hidePopover()">Close</ons-button>
+            </p>
+          </div>
+        </ons-popover>
+
+        <br>
+        <!-- TEST STOP -->
         <div id="location" style="text-align: left; margin-top: 10px;">
             <ons-button onclick="vasttrafikObj.getGoogleLocation()">Min plats</ons-button>
 
