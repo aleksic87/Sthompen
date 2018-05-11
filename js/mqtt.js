@@ -100,7 +100,7 @@ var clientMQTT = (function () {
         payload = message.payloadString;
         var jsonObj = $.parseJSON(payload);
         topic = message.destinationName;
-        //debugLogger.debugLog("Receive message from MQTT: " + topic + " : " + payload);
+        debugLogger.debugLog("Receive message from MQTT: " + topic + " : " + payload);
         if (topic == "appConnectLEDResponse") {
             led.updateLedStatus(jsonObj);
             var modal = document.querySelector('ons-modal');
@@ -115,15 +115,7 @@ var clientMQTT = (function () {
             chart.plotHumidityTempChart(jsonObj);
         }
         else if (topic == "appConnectSunResponse") {
-            if(jsonObj.sunriseMinute > 9)
-                var sunriseVal = "0" + jsonObj.sunriseHour + ":" + jsonObj.sunriseMinute;
-            // Add second number if minute is below 10
-            else
-                var sunriseVal = "0" + jsonObj.sunriseHour + ":" + "0" + jsonObj.sunriseMinute;
-            document.getElementById("sunriseValue").innerHTML = sunriseVal;
-
-            var sunsetVal = jsonObj.sunsetHour + ":" + jsonObj.sunsetMinute;
-            document.getElementById("sunsetValue").innerHTML = sunsetVal;
+            sun.sunriseAndSunset(jsonObj);
         }
     }
 
