@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   width="500px"
+   height="500px"
+   viewBox="0 0 500 500"
+   enable-background="new 0 0 500 500"
+   xml:space="preserve"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="Spårvagnslinje_2.svg"><metadata
+   id="metadata22"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs20" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1018"
+   id="namedview18"
+   showgrid="false"
+   inkscape:zoom="1.3350176"
+   inkscape:cx="167.37288"
+   inkscape:cy="262.41073"
+   inkscape:window-x="1912"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg2" />
+<g
+   id="Ruta"
+   style="fill:#fedc00;fill-opacity:1">
+	<g
+   id="g5"
+   style="fill:#fedc00;fill-opacity:1">
+		<path
+   fill="#F1E523"
+   d="M499,397c0,55.229-44.771,100-100,100H105C49.771,497,5,452.229,5,397V103C5,47.771,49.771,3,105,3h294    c55.229,0,100,44.771,100,100V397z"
+   id="path7"
+   style="fill:#fedc00;fill-opacity:1" />
+	</g>
+	<g
+   id="Layer_3_1_"
+   style="fill:#fedc00;fill-opacity:1">
+	</g>
+</g>
+<g
+   id="Layer_3">
+</g>
+
+<path
+   style="fill:#01abe9;fill-opacity:1;stroke:none"
+   d="m 170.28828,369.76649 74.79297,-101.27422 c 6.23065,-8.55556 17.01132,-25.40194 20.1872,-30.78087 1.72097,-2.91475 4.35731,-7.36635 5.85858,-9.89248 1.50125,-2.5261 3.72721,-6.81873 4.9466,-9.53915 1.21937,-2.72044 2.50183,-5.58219 2.84989,-6.35945 2.5467,-5.6869 5.87705,-17.98462 7.8571,-29.01335 2.25209,-18.85155 0.23471,-32.82585 -6.26707,-42.41986 -6.50179,-9.59403 -17.81348,-13.97044 -27.38214,-14.25241 -13.58461,-0.40032 -20.24111,1.03582 -27.84003,8.67435 -7.69999,7.74011 -11.5436,16.91378 -11.56364,31.61189 l -0.0123,10.01076 -41.99244,0 0,-13.3801 c 0,-10.06262 0.26207,-13.33462 1.4007,-17.48849 4.27154,-15.58305 7.6032,-23.41962 16.88179,-32.72884 10.74249,-10.77792 19.91857,-15.996425 36.4264,-18.597591 15.89805,-2.505088 32.88813,-2.890459 46.28077,0.28169 15.58865,3.692277 19.95193,6.388871 28.63323,12.251161 12.91976,8.72445 21.87799,24.40074 25.50733,44.63606 1.07779,6.00928 1.04599,37.61126 -0.0448,44.51611 -1.44685,9.15875 -1.6574,10.09492 -3.74507,16.65167 -3.79288,11.91238 -10.3722,26.42757 -15.03229,33.16398 -1.07539,1.55454 -3.28731,4.99596 -4.91536,7.64761 -2.4875,4.05141 -6.75541,11.16452 -25.3384,35.27815 l -63.57599,81.77007 122.51409,-0.38722 0,35.73742 -166.42715,0 z"
+   id="path2989"
+   inkscape:connector-curvature="0"
+   sodipodi:nodetypes="ccssssczsssccssssssssssscccccc" /><g
+   id="g3010" /><g
+   id="g3021" /></svg>
