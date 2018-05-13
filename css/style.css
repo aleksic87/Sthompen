@@ -58,6 +58,25 @@ span#humidityPercent {
     font-weight: 100;
     font-size: 10px;
 }
+
+span#tramNr1 {
+    background-color: #ffffff;
+    color: #00394d;
+}
+span#tramNr3 {
+    background-color: #004b85;
+    color: #ffffff;
+}
+span#tramNr6 {
+    background-color: #fa8719;
+    color: #00394d;
+}
+span#tramNr8 {
+    background-color: #872387;
+    color: #ffffff;
+    text-align: center;
+}
+
 .pulsate {
     -webkit-animation: pulsate 3s ease-out;
     -webkit-animation-iteration-count: infinite;

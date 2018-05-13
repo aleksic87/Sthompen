@@ -4,100 +4,125 @@
 
 var vasttrafikObj = (function () {
     var requestVapi,getLocation;
+    var brunnsparken_D_id = "9022014001760004"; // Från stan
+    var ullevinorra_A_id = "9022014007171001"; // Mot stan/korsvägen
+    var ullevinorra_B_id = "9022014007171002"; // Mot svingeln
+    var svingeln_A_id = "9022014006480001"; // Mot ullevi norra
 
-    requestVapi = function () {
-        mqttCredentials.getVasttrafikToken();
-    },
-
-    getLocation = function () {
-        debugLogger.debugLog("Get location");
-        var x = document.getElementById("demo");
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-            debugLogger.debugLog("Get current position");
-        } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
-            debugLogger.debugLog("Geolocation is not supported by this browser.");
-        }
-
-        function showPosition(position) {
-            debugLogger.debugLog("Show position");
-            var latlon = position.coords.latitude + "," + position.coords.longitude;
-
-            var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
-                +latlon+"&zoom=14&size=400x300&sensor=false&key="+mqttCredentials.getgoogleApiKey();
-            document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-        }
-
-    //To use this code on your website, get a free API key from Google.
-    //Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
-
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    x.innerHTML = "User denied the request for Geolocation."
-                    debugLogger.debugLog("User denied the request for Geolocation.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = "Location information is unavailable."
-                    debugLogger.debugLog("Location information is unavailable.");
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = "The request to get user location timed out."
-                    debugLogger.debugLog("The request to get user location timed out.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = "An unknown error occurred."
-                    debugLogger.debugLog("An unknown error occurred.");
-                    break;
-            }
-        }
-    },
-
-    getGoogleLocation = function () {
+    getVasttrafikToken = function (succes_callback, stop) {
         $.ajax({
-            url: "https://www.googleapis.com/geolocation/v1/geolocate?key="+mqttCredentials.getGoogleLGeolocateKey(),
-            type: 'POST',
-            beforeSend : function( xhr ) {
-                xhr.setRequestHeader( "Content-Type", "application/json");
+            type: "POST",
+            url: "https://api.vasttrafik.se:443/token?grant_type=client_credentials",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Basic SGRnNF9teWlSU1B4V0dXY2Q0MlFoOUxMU2NNYTpjcWlCdXJ3cUpkVzh4UWUxM0VrZ3dLNUtMdkVh');
             },
-            success: function(response, request){
-                debugLogger.debugLog("Lat: "+response.location.lat);
-                debugLogger.debugLog("Lon: "+response.location.lng);
-                var mapOptions = {
-                    center: new google.maps.LatLng(response.location.lat, response.location.lng),
-                    zoom: 15,
-                    mapTypeId: google.maps.MapTypeId.HYBRID
-                }
-                var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                var marker = new google.maps.Marker({
-                    position: {lat: response.location.lat, lng: response.location.lng},
-                    map: map,
-                    title: 'Hello World!'
-                });
+            success: function(data){
+                succes_callback(data, stop)
             }
         });
     },
 
-    getGoogleMap = function () {
-        var mapOptions = {
-            center: new google.maps.LatLng(51.5, -0.12),
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.HYBRID
+    getUrl = function (stop, id) {
+        directionId = id;
+        var d = new Date();
+        if(d.getMonth()+1 < 10) {
+            var month = "0"+(d.getMonth() + 1);
         }
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        else{
+            var month = (d.getMonth() + 1);
+        }
+        var date = d.getFullYear()+"-"+month+"-"+d.getDate();
+        var time = d.getHours()+'%3A'+d.getMinutes();
+
+        if(stop == "Brunnsparken"){
+            id = brunnsparken_D_id;
+            directionId = ullevinorra_B_id;
+        }
+        else if(stop == "Ullevi Norra"){
+            id = svingeln_A_id;
+            directionId = ullevinorra_A_id;
+        }
+        if(stop == "Brunnsparken" || stop == "Ullevi Norra"){
+        return "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id="+id+"&date=" +
+                date+"&time="+time+"&useVas=0&useLDTrain=0&useRegTrain=0&useBus=0&useBoat=0&timeSpan=" +
+                "60maxDeparturesPerLine=3&direction="+directionId+"&format=json"
+            }
+            else{
+                return "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id="+id+"&date=" +
+                date+"&time="+time+"&useVas=0&useLDTrain=0&useRegTrain=0&useBus=0&useBoat=0&timeSpan=" +
+                "60maxDeparturesPerLine=3&format=json"
+            }
     },
 
-    generateTrams = function (response) {
+    generateTrams = function (response, stop, id) {
         var trams;
+        var listItems = 0;
         var array = response.DepartureBoard.Departure;
+        //for(var trams=0; trams<array.length; trams++){
         for(trams in array){
-            //document.getElementById("vasttrafikApi").innerHTML = document.getElementById("vasttrafikApi").innerHTML +
-            document.getElementById('tramsPopover').innerHTML = document.getElementById("tramsPopover").innerHTML +
-                '<span id=tramNr'+array[trams].sname+'>'+array[trams].sname+" "+
-                '</span> <span id="tramTime">'+array[trams].time+'</span><br>';
+            if(listItems==20){
+                break;
+            }
+            if(stop == "Brunnsparken" && (array[trams].sname == "2" || array[trams].sname == "6" || array[trams].sname == "7" || array[trams].sname == "9")){
+                continue;
+            }
+            else{
+            // Populate page
+            document.getElementById("vasttrafikApi").innerHTML = document.getElementById("vasttrafikApi").innerHTML +
+
+                '<ons-list-item>'+
+                    '<div class="left">'+
+                        '<img class="list-item__thumbnail" src="img/trams/'+array[trams].sname+'.png">'+
+                    '</div>'+
+                    '<div class="center">'+
+                        '<span class="list-item__title"><B>'+array[trams].time+"</B> "+array[trams].direction+'</span>'+
+                    '</div>'+
+                '</ons-list-item>';
+                listItems++;
+            }
         }
+    },
+
+    getNearbyStops = function (response, stop) {
+        var access_token = response.access_token;
+        $.ajax({
+            type: "GET",
+            url: "https://api.vasttrafik.se/bin/rest.exe/v2/location.nearbystops?originCoordLat=57.7111136&originCoordLong=11.9860736&format=json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader( "Authorization", "Bearer " + access_token );
+            },
+            success: function(data){
+                var name = data.LocationList.StopLocation[0].name;
+                var id = data.LocationList.StopLocation[0].id;
+                getFavouriteStops(response, name, id);
+            }
+        });
+
+    },
+
+    getFavouriteStops = function (response, stop, id) {
+        var access_token = response.access_token;
+        document.getElementById("vasttrafikApi").innerHTML = "Från "+stop+": <br>";
+            $.ajax({
+                url: vasttrafikObj.getUrl(stop, id),
+                type: 'GET',
+                beforeSend : function( xhr ) {
+                    xhr.setRequestHeader( "Authorization", "Bearer " + access_token );
+                },
+                success: function(response, request){
+                    vasttrafikObj.generateTrams(response, stop, id);
+                }
+            });
+    },
+
+    bootstrapVT = function (stop) {
+        if(stop == "Min Plats"){
+            getVasttrafikToken(getNearbyStops, stop);
+        }
+        else{
+            getVasttrafikToken(getFavouriteStops, stop);
+        }
+
     },
 
     showPopover = function(target) {
@@ -110,11 +135,12 @@ var vasttrafikObj = (function () {
     }
 
     return {
-        requestVapi: requestVapi,
-        getLocation: getLocation,
-        getGoogleLocation: getGoogleLocation,
-        getGoogleMap: getGoogleMap,
+        getVasttrafikToken: getVasttrafikToken,
+        getUrl: getUrl,
         generateTrams: generateTrams,
+        getNearbyStops: getNearbyStops,
+        getFavouriteStops: getFavouriteStops,
+        bootstrapVT: bootstrapVT,
         showPopover: showPopover,
         hidePopover: hidePopover
     };

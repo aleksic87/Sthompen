@@ -29,11 +29,10 @@ var clientMQTT = (function () {
     // called when the client connects
     onConnect = function () {
         connected = true;
-        debugLogger.debugLog("Connected to MQTT");
+        //debugLogger.debugLog("Connected to MQTT");
         console.log('Connected with MQTT');
         client.subscribe("listen",0);
         client.subscribe("tempSensor",0);
-        //client.subscribe("motionstatus",0);
         client.subscribe("led",0);
         client.subscribe("appConnectLEDResponse",0);
         client.subscribe("appConnectSunResponse",0);
@@ -47,7 +46,6 @@ var clientMQTT = (function () {
         document.getElementById("vardagsrum2Dim").addEventListener("click", led.toggleLedVardagsrum2Dim);
         document.getElementById("sovrum").addEventListener("change", led.toggleLedSovrum);
         document.getElementById("gastrum").addEventListener("change", led.toggleLedGastrum);
-        vasttrafikObj.getGoogleMap();
 
         //Init sensor status
         var obj = JSON.parse(0);
@@ -64,7 +62,7 @@ var clientMQTT = (function () {
     // called when the connect to client fails
     doFail = function (e) {
         connected = false;
-        debugLogger.debugLog("Failed to connect with MQTT: " + JSON.stringify(e));
+        //debugLogger.debugLog("Failed to connect with MQTT: " + JSON.stringify(e));
         console.log("Failed to connect with MQTT: " + JSON.stringify(e));
         clientMQTT.startMQTT();
     };
@@ -90,7 +88,7 @@ var clientMQTT = (function () {
         console.log("Lost connection with MQTT");
         if (responseObject.errorCode !== 0) {
             console.log("Lost connection with MQTT" + JSON.stringify(responseObject));
-            debugLogger.debugLog("Lost connection with MQTT" + JSON.stringify(responseObject));
+            //debugLogger.debugLog("Lost connection with MQTT" + JSON.stringify(responseObject));
         }
         clientMQTT.startMQTT();
     };
