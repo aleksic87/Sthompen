@@ -75,7 +75,7 @@ var vasttrafikObj = (function () {
                         '<img class="list-item__thumbnail" src="img/trams/'+array[trams].sname+'.png">'+
                     '</div>'+
                     '<div class="center">'+
-                        '<span class="list-item__title"><B>'+array[trams].time+"</B> "+array[trams].direction+'</span>'+
+                        '<span class="list-item__title"><B>'+array[trams].time+"</B> "+array[trams].direction+" <B>"+array[trams].track+'</B></span>'+
                     '</div>'+
                 '</ons-list-item>';
                 listItems++;
@@ -85,18 +85,7 @@ var vasttrafikObj = (function () {
 
     getNearbyStops = function (response, stop) {
         var access_token = response.access_token;
-        $.ajax({
-            type: "GET",
-            url: "https://api.vasttrafik.se/bin/rest.exe/v2/location.nearbystops?originCoordLat=57.7111136&originCoordLong=11.9860736&format=json",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader( "Authorization", "Bearer " + access_token );
-            },
-            success: function(data){
-                var name = data.LocationList.StopLocation[0].name;
-                var id = data.LocationList.StopLocation[0].id;
-                getFavouriteStops(response, name, id);
-            }
-        });
+        geoLocation.getLocation(access_token, response);
 
     },
 
