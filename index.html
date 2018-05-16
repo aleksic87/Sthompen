@@ -163,14 +163,17 @@
         </ons-toolbar>
         <img src="img/vasttrafik_logo.jpg">
         <br>
-        <div id="vasttrafikFromSvingeln" style="text-align: left;">
-            <ons-button onclick="vasttrafikObj.bootstrapVT('Min Plats')">Min Plats</ons-button>
+        <div id="vasttrafikFavourites" style="text-align: center;">
             <ons-button onclick="vasttrafikObj.bootstrapVT('Ullevi Norra')">Ullevi Norra</ons-button>
             <ons-button onclick="vasttrafikObj.bootstrapVT('Brunnsparken')">Brunnsparken</ons-button>
             <ons-button onclick="vasttrafikObj.bootstrapVT('BFG')">BFG</ons-button>
-
-            <div id="vasttrafikApi" style="margin-bottom: 5px;"/>
         </div>
+        <brbutton>
+         <div id="vasttrafikMyPosition" style="text-align: center; margin-left: 17px;">
+            <ons-button onclick="vasttrafikObj.bootstrapVT('Min Plats')" style="background-color: #3eadeb;">Min Plats</ons-button>
+        </div>
+        <!-- Trams timetable -->
+        <div id="vasttrafikApi" style="margin-bottom: 5px; text-align: left;"/>
         
         <!-- MAPS 
         <div id="location" style="text-align: left; margin-top: 10px;">
