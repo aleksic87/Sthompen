@@ -48,16 +48,21 @@ var vasttrafikObj = (function () {
             id = bfg_B_id;
             directionId = sorgardesgatan_B_id;
         }
-        if(stop == "Brunnsparken" || stop == "Ullevi Norra" || stop == "BFG"){
+        if(stop == "Brunnsparken" || stop == "Ullevi Norra"){
         return "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id="+id+"&date=" +
                 date+"&time="+time+"&useVas=0&useLDTrain=0&useRegTrain=0&useBus=0&useBoat=0&timeSpan=" +
                 "60maxDeparturesPerLine=3&direction="+directionId+"&format=json"
-            }
-            else{
+        }
+        else if(stop == "BFG"){
+                return "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id="+id+"&date=" +
+                date+"&time="+time+"&useVas=0&useLDTrain=0&useRegTrain=0&useBus=1&useBoat=0&timeSpan=" +
+                "60maxDeparturesPerLine=3&direction="+directionId+"&format=json"
+        }
+        else{
                 return "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id="+id+"&date=" +
                 date+"&time="+time+"&useVas=0&useLDTrain=0&useRegTrain=0&useBus=0&useBoat=0&timeSpan=" +
                 "60maxDeparturesPerLine=3&format=json"
-            }
+        }
     },
 
     generateTrams = function (response, stop, id) {
