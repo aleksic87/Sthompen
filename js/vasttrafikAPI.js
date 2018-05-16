@@ -8,6 +8,8 @@ var vasttrafikObj = (function () {
     var ullevinorra_A_id = "9022014007171001"; // Mot stan/korsvägen
     var ullevinorra_B_id = "9022014007171002"; // Mot svingeln
     var svingeln_A_id = "9022014006480001"; // Mot ullevi norra
+    var bfg_B_id ="9022014012153002"; // Från BFG
+    var sorgardesgatan_B_id = "9022014012156002"; // Mot stan från vgr
 
     getVasttrafikToken = function (succes_callback, stop) {
         $.ajax({
@@ -42,7 +44,11 @@ var vasttrafikObj = (function () {
             id = svingeln_A_id;
             directionId = ullevinorra_A_id;
         }
-        if(stop == "Brunnsparken" || stop == "Ullevi Norra"){
+        else if(stop == "BFG"){
+            id = bfg_B_id;
+            directionId = sorgardesgatan_B_id;
+        }
+        if(stop == "Brunnsparken" || stop == "Ullevi Norra" || stop == "BFG"){
         return "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id="+id+"&date=" +
                 date+"&time="+time+"&useVas=0&useLDTrain=0&useRegTrain=0&useBus=0&useBoat=0&timeSpan=" +
                 "60maxDeparturesPerLine=3&direction="+directionId+"&format=json"
