@@ -69,28 +69,33 @@ var vasttrafikObj = (function () {
         var trams;
         var listItems = 0;
         var array = response.DepartureBoard.Departure;
-        //for(var trams=0; trams<array.length; trams++){
-        for(trams in array){
-            if(listItems==20){
-                break;
-            }
-            if(stop == "Brunnsparken" && (array[trams].sname == "2" || array[trams].sname == "6" || array[trams].sname == "7" || array[trams].sname == "9")){
-                continue;
-            }
-            else{
-            // Populate page
-            document.getElementById("vasttrafikApi").innerHTML = document.getElementById("vasttrafikApi").innerHTML +
+        if(array != undefined){
+            //for(var trams=0; trams<array.length; trams++){
+            for(trams in array){
+                if(listItems==20){
+                    break;
+                }
+                if(stop == "Brunnsparken" && (array[trams].sname == "2" || array[trams].sname == "6" || array[trams].sname == "7" || array[trams].sname == "9")){
+                    continue;
+                }
+                else{
+                // Populate page
+                document.getElementById("vasttrafikApi").innerHTML = document.getElementById("vasttrafikApi").innerHTML +
 
-                '<ons-list-item>'+
-                    '<div class="left">'+
-                        '<img class="list-item__thumbnail" src="img/trams/'+array[trams].sname+'.png">'+
-                    '</div>'+
-                    '<div class="center">'+
-                        '<span class="list-item__title"><B>'+array[trams].time+"</B> "+array[trams].direction+" <B>"+array[trams].track+'</B></span>'+
-                    '</div>'+
-                '</ons-list-item>';
-                listItems++;
+                    '<ons-list-item>'+
+                        '<div class="left">'+
+                            '<img class="list-item__thumbnail" src="img/trams/'+array[trams].sname+'.png">'+
+                        '</div>'+
+                        '<div class="center">'+
+                            '<span class="list-item__title"><B>'+array[trams].time+"</B> "+array[trams].direction+" <B>"+array[trams].track+'</B></span>'+
+                        '</div>'+
+                    '</ons-list-item>';
+                    listItems++;
+                }
             }
+        }
+        else{
+            document.getElementById("vasttrafikApi").innerHTML = "Inga avgångar"
         }
     },
 
