@@ -94,6 +94,19 @@ var vasttrafikObj = (function () {
                 }
             }
         }
+        else if(array.length == 1){
+            document.getElementById("vasttrafikApi").innerHTML = document.getElementById("vasttrafikApi").innerHTML +
+
+            '<ons-list-item>'+
+                '<div class="left">'+
+                    '<img class="list-item__thumbnail" src="img/trams/'+array[0].sname+'.png">'+
+                '</div>'+
+                '<div class="center">'+
+                    '<span class="list-item__title"><B>'+array[0].time+"</B> "+array[0].direction+" <B>"+array[0].track+'</B></span>'+
+                '</div>'+
+            '</ons-list-item>';
+            listItems++;
+        }
         else{
             document.getElementById("vasttrafikApi").innerHTML = "Inga avgångar"
         }
