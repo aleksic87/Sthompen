@@ -5,12 +5,12 @@
 var temp = (function () {
 
     tempsens = function (payload) {
-        var insideVal = payload.inside;
-        document.getElementById("degreesInside").innerHTML = insideVal;
-        var outsideVal = payload.outside;
-        document.getElementById("degreesOutside").innerHTML = outsideVal;
-        var humidityVal = payload.humidity;
-        document.getElementById("humidityValue").innerHTML = humidityVal;
+        var insideValNow = payload.insideValNow;
+        document.getElementById("degreesInside").innerHTML = insideValNow;
+        var outsideValNow = payload.outsideValNow;
+        document.getElementById("degreesOutside").innerHTML = outsideValNow;
+        var humidityValNow = payload.humidityValNow;
+        document.getElementById("humidityValue").innerHTML = humidityValNow;
     };
 
     return {

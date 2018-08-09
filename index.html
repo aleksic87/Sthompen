@@ -28,6 +28,7 @@
 
 <!-- Geo Location -->
 <script src="js/geolocation.js"></script>
+<script src="js/strava.js"></script>
 
 <!-- Sensors -->
 <script src="js/led.js"></script>
@@ -138,6 +139,9 @@
             <span id="sunsetLabel" align="center"><img src="img/sunset.png"></span>
             <span id="sunsetValue" align="center">hämtar...</span>
         </div>
+
+        <ons-button id="stravaBtn" onclick="strava.getAthlete()">strava</ons-button>
+
     </ons-page>
 </ons-template>
 
