@@ -31,7 +31,7 @@ var chart = (function () {
             data: {
                 labels: labelsFromPsql,
                 datasets: [{
-                    label: "Innetemperatur senaste 24h",
+                    label: "Innetemperatur senaste 24h (0 = Nu)",
                     backgroundColor: 'rgb(124, 19, 19)',
                     borderColor: 'rgb(110, 15, 15)',
                     data: invertedDataInside,
@@ -107,7 +107,7 @@ var chart = (function () {
             data: {
                 labels: labelsFromPsql,
                 datasets: [{
-                    label: "Luftfuktighet senaste 24h",
+                    label: "Luftfuktighet senaste 24h (0 = Nu)",
                     backgroundColor: 'rgb(88, 200, 200)',
                     borderColor: 'rgb(70, 157, 164)',
                     data: invertedDataHumidity,

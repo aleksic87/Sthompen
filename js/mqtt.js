@@ -108,7 +108,6 @@ var clientMQTT = (function () {
         }
         else if (topic == "appConnectTempResponse" || topic == "tempSensor") {
             temp.tempsens(jsonObj);
-            chart.plotOutsideTempChart(jsonObj);
             chart.plotInsideTempChart(jsonObj);
             chart.plotHumidityTempChart(jsonObj);
         }

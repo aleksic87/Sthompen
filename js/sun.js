@@ -21,7 +21,13 @@ var sun = (function () {
         }
 
         // Sunset
-        sunsetVal = sunsetHour + ":" + sunsetMinute;
+        if(sunsetMinute > 9){
+            sunsetVal = sunsetHour + ":" + sunsetMinute;
+        }
+        // Add second number if minute is below 10
+        else{
+            sunsetVal = sunsetHour + ":" + "0" + sunsetMinute;
+        }
 
         
         document.getElementById("sunriseValue").innerHTML = sunriseVal;
