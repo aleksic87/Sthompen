@@ -1,1433 +1,1453 @@
 [
-  {
-    "id": "691526f4.60b108",
-    "type": "mqtt in",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "vardagsrum",
-    "qos": "2",
-    "broker": "2d24316e.12544e",
-    "x": 526,
-    "y": 772,
-    "wires": [
-      [
-        "111d59a3.5e0266",
-        "ed118ad6.690b48"
-      ]
-    ]
-  },
-  {
-    "id": "111d59a3.5e0266",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "ledVardagsrum",
-    "func": "global.set(\"newledStatusVardagsrum\",msg.payload);\n\nif(global.get(\"ledStatusVardagsrum\") != global.get(\"newledStatusVardagsrum\")){\n    global.set(\"ledStatusVardagsrum\",global.get(\"newledStatusVardagsrum\"));\n    msg.payload = global.get(\"ledStatusVardagsrum\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusVardagsrum\");\n}\n\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 721,
-    "y": 806,
-    "wires": [
-      [
-        "97a498e8.852618"
-      ]
-    ]
-  },
-  {
-    "id": "ea72a107.a4db9",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "led",
-    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\"),\n                \"autotimer\": global.get(\"autotimerStatus\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 570,
-    "y": 440,
-    "wires": [
-      [
-        "f75adf1.b253f2"
-      ]
-    ]
-  },
-  {
-    "id": "f0b78c2a.38daf",
-    "type": "mqtt in",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "appConnect",
-    "qos": "2",
-    "broker": "2d24316e.12544e",
-    "x": 390,
-    "y": 440,
-    "wires": [
-      [
-        "ea72a107.a4db9",
-        "fe453505.d8b158",
-        "c5b5e37b.110c6"
-      ]
-    ]
-  },
-  {
-    "id": "f75adf1.b253f2",
-    "type": "mqtt out",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "appConnectLEDResponse",
-    "qos": "",
-    "retain": "",
-    "broker": "2d24316e.12544e",
-    "x": 820,
-    "y": 440,
-    "wires": []
-  },
-  {
-    "id": "3f4704d2.845a6c",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --on 333",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "on",
-    "x": 803,
-    "y": 709,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "806d6dbc.9278d",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --off 333",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "off",
-    "x": 803,
-    "y": 749,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "ed118ad6.690b48",
-    "type": "switch",
-    "z": "98edc158.ad053",
-    "name": "",
-    "property": "payload",
-    "propertyType": "msg",
-    "rules": [
-      {
-        "t": "eq",
-        "v": "1",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "0",
-        "vt": "str"
-      }
-    ],
-    "checkall": "true",
-    "outputs": 2,
-    "x": 566,
-    "y": 712,
-    "wires": [
-      [
-        "3f4704d2.845a6c"
-      ],
-      [
-        "806d6dbc.9278d"
-      ]
-    ]
-  },
-  {
-    "id": "47f84844.f25b58",
-    "type": "mqtt in",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "sovrum",
-    "qos": "2",
-    "broker": "2d24316e.12544e",
-    "x": 506,
-    "y": 912,
-    "wires": [
-      [
-        "bc88c06c.06b7a",
-        "1ee62e73.c0b302"
-      ]
-    ]
-  },
-  {
-    "id": "1ee62e73.c0b302",
-    "type": "switch",
-    "z": "98edc158.ad053",
-    "name": "",
-    "property": "payload",
-    "propertyType": "msg",
-    "rules": [
-      {
-        "t": "eq",
-        "v": "1",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "0",
-        "vt": "str"
-      }
-    ],
-    "checkall": "true",
-    "outputs": 2,
-    "x": 566,
-    "y": 852,
-    "wires": [
-      [
-        "44dee912.b7d6e8"
-      ],
-      [
-        "c9045fb9.e8b6c"
-      ]
-    ]
-  },
-  {
-    "id": "44dee912.b7d6e8",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --on 111",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "on",
-    "x": 803,
-    "y": 849,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "c9045fb9.e8b6c",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --off 111",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "off",
-    "x": 803,
-    "y": 889,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "bc88c06c.06b7a",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "ledSovrum",
-    "func": "global.set(\"newledStatusSovrum\",msg.payload);\n\nif(global.get(\"ledStatusSovrum\") != global.get(\"newledStatusSovrum\")){\n    global.set(\"ledStatusSovrum\",global.get(\"newledStatusSovrum\"));\n    msg.payload = global.get(\"ledStatusSovrum\");\n}\n\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 803,
-    "y": 929,
-    "wires": [
-      [
-        "97a498e8.852618"
-      ]
-    ]
-  },
-  {
-    "id": "cf36b351.c5cdd",
-    "type": "mqtt in",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "gastrum",
-    "qos": "2",
-    "broker": "2d24316e.12544e",
-    "x": 534,
-    "y": 653,
-    "wires": [
-      [
-        "4354c865.fcdb68",
-        "e5fff7f.0318b08"
-      ]
-    ]
-  },
-  {
-    "id": "4354c865.fcdb68",
-    "type": "switch",
-    "z": "98edc158.ad053",
-    "name": "",
-    "property": "payload",
-    "propertyType": "msg",
-    "rules": [
-      {
-        "t": "eq",
-        "v": "1",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "0",
-        "vt": "str"
-      }
-    ],
-    "checkall": "true",
-    "outputs": 2,
-    "x": 564,
-    "y": 593,
-    "wires": [
-      [
-        "873d11d2.27653"
-      ],
-      [
-        "d785029d.a94ba"
-      ]
-    ]
-  },
-  {
-    "id": "873d11d2.27653",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --on 222",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "on",
-    "x": 724,
-    "y": 573,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "d785029d.a94ba",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --off 222",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "off",
-    "x": 724,
-    "y": 613,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "e5fff7f.0318b08",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "ledGastrum",
-    "func": "global.set(\"newledStatusGastrum\",msg.payload);\n\nif(global.get(\"ledStatusGastrum\") != global.get(\"newledStatusGastrum\")){\n    global.set(\"ledStatusGastrum\",global.get(\"newledStatusGastrum\"));\n    msg.payload = global.get(\"ledStatusGastrum\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusGastrum\");\n}\n\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 726,
-    "y": 659,
-    "wires": [
-      [
-        "97a498e8.852618"
-      ]
-    ]
-  },
-  {
-    "id": "8ead34cb.7c98a8",
-    "type": "mqtt out",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "liveUpdateLeds",
-    "qos": "",
-    "retain": "",
-    "broker": "2d24316e.12544e",
-    "x": 1048,
-    "y": 737,
-    "wires": []
-  },
-  {
-    "id": "97a498e8.852618",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "liveUpdateLeds",
-    "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 976,
-    "y": 812,
-    "wires": [
-      [
-        "8ead34cb.7c98a8"
-      ]
-    ]
-  },
-  {
-    "id": "ac37f1b9.07775",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --list-sensors",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "sensors",
-    "x": 600,
-    "y": 1280,
-    "wires": [
-      [
-        "476c2ccb.ae5564",
-        "78bd5d5c.8a0de4"
-      ],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "4439ade6.43add4",
-    "type": "mqtt out",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "tempSensor",
-    "qos": "",
-    "retain": "",
-    "broker": "2d24316e.12544e",
-    "x": 1030,
-    "y": 1200,
-    "wires": []
-  },
-  {
-    "id": "3f6b41fc.17481e",
-    "type": "mqtt in",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "vardagsrum2",
-    "qos": "2",
-    "broker": "2d24316e.12544e",
-    "x": 526,
-    "y": 1072,
-    "wires": [
-      [
-        "e617e745.b2acc8",
-        "ff483309.51b06"
-      ]
-    ]
-  },
-  {
-    "id": "e617e745.b2acc8",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "ledVardagsrum2Golvlampa",
-    "func": "global.set(\"newledStatusVardagsrum2\",msg.payload);\n\nif(global.get(\"ledStatusVardagsrum2\") != global.get(\"newledStatusVardagsrum2\")){\n    global.set(\"ledStatusVardagsrum2\",global.get(\"newledStatusVardagsrum2\"));\n    msg.payload = global.get(\"ledStatusVardagsrum2\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusVardagsrum2\");\n}\n\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 833,
-    "y": 1069,
-    "wires": [
-      [
-        "97a498e8.852618"
-      ]
-    ]
-  },
-  {
-    "id": "26bcbd05.1231a2",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --on 444",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "on",
-    "x": 803,
-    "y": 989,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "ad6993e2.333e5",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --off 444",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "off",
-    "x": 803,
-    "y": 1029,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "ff483309.51b06",
-    "type": "switch",
-    "z": "98edc158.ad053",
-    "name": "",
-    "property": "payload",
-    "propertyType": "msg",
-    "rules": [
-      {
-        "t": "eq",
-        "v": "1",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "0",
-        "vt": "str"
-      }
-    ],
-    "checkall": "true",
-    "outputs": 2,
-    "x": 566,
-    "y": 1012,
-    "wires": [
-      [
-        "26bcbd05.1231a2"
-      ],
-      [
-        "ad6993e2.333e5"
-      ]
-    ]
-  },
-  {
-    "id": "983c920f.050d5",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "tdtool --on 444",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "on",
-    "x": 590,
-    "y": 1140,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "6bf54dcf.022e74",
-    "type": "mqtt in",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "vardagsrum2Dim",
-    "qos": "2",
-    "broker": "2d24316e.12544e",
-    "x": 400,
-    "y": 1140,
-    "wires": [
-      [
-        "983c920f.050d5"
-      ]
-    ]
-  },
-  {
-    "id": "410df9e4.58f7f8",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "auto OFF kväll",
-    "payload": "0",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "00 22 * * 1,2,3,4,0",
-    "once": false,
-    "x": 141,
-    "y": 920,
-    "wires": [
-      [
-        "8d9623c9.33f2b"
-      ]
-    ]
-  },
-  {
-    "id": "5d406d56.6d9c34",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "auto ON kväll polling",
-    "payload": "1",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "*/1 15-21 * * *",
-    "once": false,
-    "x": 130,
-    "y": 820,
-    "wires": [
-      [
-        "9d747651.42a708"
-      ]
-    ]
-  },
-  {
-    "id": "5ac06d75.0a0184",
-    "type": "mqtt out",
-    "z": "98edc158.ad053",
-    "name": "appConnectTempResponse",
-    "topic": "appConnectTempResponse",
-    "qos": "",
-    "retain": "",
-    "broker": "2d24316e.12544e",
-    "x": 820,
-    "y": 480,
-    "wires": []
-  },
-  {
-    "id": "476c2ccb.ae5564",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "tempSensorALLValues",
-    "func": "var d = new Date();\nvar date = d.toString();\nvar payload = msg.payload;\nvar indexIn = payload.search(\"id=247\");\nvar indexOut = payload.search(\"id=248\");\nvar inside = payload.substring(indexIn);\nvar outside = payload.substring(indexOut);\nvar insideTextIndex = inside.search(\"temperature=\");\nvar insideText = inside.substring(insideTextIndex+12,insideTextIndex+16);\nvar outsideTextIndex = inside.search(\"temperature=\");\nvar outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+16);\nvar humidityTextIndex = inside.search(\"humidity=\");\nvar humidityText = inside.substring(humidityTextIndex+9,humidityTextIndex+11);\n\nif(insideText.substr(insideText.length - 1) == \"\\t\"){\n    insideText = inside.substring(insideTextIndex+12,insideTextIndex+15);\n}\nif(outsideText.substr(outsideText.length - 1) == \"\\t\"){\n    outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+15);\n}\n\nvar insideFloat = parseFloat(insideText);\nvar outsideFloat = parseFloat(outsideText);\nvar humidityFloat = parseFloat(humidityText);\nglobal.set(\"date\",date);\nglobal.set(\"insideFloat\",insideFloat);\nglobal.set(\"outsideFloat\",outsideFloat);\nglobal.set(\"humidityFloat\",humidityFloat);\n\nvar insideQueue = global.get(\"insideQueue\");\ninsideQueue.push(insideFloat);\nglobal.set(\"insideQueue\",insideQueue);\nvar outsideQueue = global.get(\"outsideQueue\");\noutsideQueue.push(outsideFloat);\nglobal.set(\"outsideQueue\",outsideQueue);\nvar humidityQueue = global.get(\"humidityQueue\");\nhumidityQueue.push(humidityFloat);\nglobal.set(\"humidityQueue\",humidityQueue);\nvar timeQueue = global.get(\"timeQueue\");\ntimeQueue.push(date);\nglobal.set(\"timeQueue\",timeQueue);\n\n// 1008 = 7days\nif(insideQueue.length > 2016){\n    insideQueue.shift();\n}\nif(outsideQueue.length > 2016){\n    outsideQueue.shift();\n}\nif(humidityQueue.length > 2016){\n    humidityQueue.shift();\n}\nif(timeQueue.length > 2016){\n    timeQueue.shift();\n}\n\nmsg.payload = { \"date\": global.get(\"date\"),\n                \"inside\": global.get(\"insideFloat\"),\n                \"outside\": global.get(\"outsideFloat\"),\n                \"humidity\": global.get(\"humidityFloat\"),\n                \"insideQueue\": global.get(\"insideQueue\"),\n                \"outsideQueue\": global.get(\"outsideQueue\"),\n                \"humidityQueue\": global.get(\"humidityQueue\"),\n                \"timeQueue\": global.get(\"timeQueue\"),\n                };\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 820,
-    "y": 1260,
-    "wires": [
-      [
-        "6dc3aea4.e475"
-      ]
-    ]
-  },
-  {
-    "id": "fe453505.d8b158",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "temp",
-    "func": "msg.payload = {\"insideQueue\": global.get(\"insideQueue25\"),\n                \"outsideQueue\": global.get(\"outsideQueue25\"),\n                \"humidityQueue\": global.get(\"humidityQueue25\"),\n                \"timeQueue\": global.get(\"timeQueue25\"),\n                \"inside\": global.get(\"insideFloat\"),\n                \"outside\": global.get(\"outsideFloat\"),\n                \"humidity\": global.get(\"humidityFloat\")\n                };\n\nreturn msg;\n\n",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 570,
-    "y": 480,
-    "wires": [
-      [
-        "5ac06d75.0a0184"
-      ]
-    ]
-  },
-  {
-    "id": "457e26dc.a8aae8",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "globals",
-    "func": "var insideQueue = [];\nglobal.set(\"insideQueue\",insideQueue);\nvar outsideQueue = [];\nglobal.set(\"outsideQueue\",outsideQueue);\nvar humidityQueue = [];\nglobal.set(\"humidityQueue\",humidityQueue);\nvar timeQueue = [];\nglobal.set(\"timeQueue\",timeQueue);\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 584,
-    "y": 1391,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "8b9ea07f.19862",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "reset queues",
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 434,
-    "y": 1391,
-    "wires": [
-      [
-        "457e26dc.a8aae8"
-      ]
-    ]
-  },
-  {
-    "id": "12f2bf7d.ac6621",
-    "type": "template",
-    "z": "98edc158.ad053",
-    "name": "",
-    "field": "payload",
-    "fieldType": "msg",
-    "format": "handlebars",
-    "syntax": "mustache",
-    "template": "select * from tempTable where timeQueue = 'Sun Feb 19 2017 03:28:02 GMT+0100 (CET)';",
-    "x": 590,
-    "y": 1560,
-    "wires": [
-      [
-        "e0c9b4d5.546cd8"
-      ]
-    ]
-  },
-  {
-    "id": "e0c9b4d5.546cd8",
-    "type": "postgres",
-    "z": "98edc158.ad053",
-    "postgresdb": "253ab5f4.36337a",
-    "name": "",
-    "output": true,
-    "outputs": 1,
-    "x": 760,
-    "y": 1560,
-    "wires": [
-      [
-        "754977ad.a2b1c8"
-      ]
-    ]
-  },
-  {
-    "id": "794e0d89.861df4",
-    "type": "debug",
-    "z": "98edc158.ad053",
-    "name": "",
-    "active": true,
-    "console": "false",
-    "complete": "false",
-    "x": 1050,
-    "y": 1560,
-    "wires": []
-  },
-  {
-    "id": "bcb6c7d5.d28da8",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "select all",
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 440,
-    "y": 1560,
-    "wires": [
-      [
-        "12f2bf7d.ac6621"
-      ]
-    ]
-  },
-  {
-    "id": "ec54e63c.a61018",
-    "type": "file",
-    "z": "98edc158.ad053",
-    "name": "",
-    "filename": "/home/pi/tempsensorfile",
-    "appendNewline": true,
-    "createDir": false,
-    "overwriteFile": "true",
-    "x": 990,
-    "y": 1380,
-    "wires": []
-  },
-  {
-    "id": "6dc3aea4.e475",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "queueCheck",
-    "func": "var check = global.get(\"insideQueue\");\n\nif(check.length < 1000){\n    msg.payload = \"FAIL: \"+check.length;\n}\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 790,
-    "y": 1320,
-    "wires": [
-      [
-        "d21cd478.bf1ce8"
-      ]
-    ]
-  },
-  {
-    "id": "d21cd478.bf1ce8",
-    "type": "switch",
-    "z": "98edc158.ad053",
-    "name": "",
-    "property": "payload",
-    "propertyType": "msg",
-    "rules": [
-      {
-        "t": "cont",
-        "v": "FAIL",
-        "vt": "str"
-      },
-      {
-        "t": "else"
-      }
-    ],
-    "checkall": "true",
-    "outputs": 2,
-    "x": 950,
-    "y": 1320,
-    "wires": [
-      [],
-      [
-        "ec54e63c.a61018"
-      ]
-    ]
-  },
-  {
-    "id": "754977ad.a2b1c8",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "",
-    "func": "\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 890,
-    "y": 1560,
-    "wires": [
-      [
-        "794e0d89.861df4"
-      ]
-    ]
-  },
-  {
-    "id": "6a95addb.bb0c14",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "read temp sensor",
-    "payload": "",
-    "payloadType": "date",
-    "repeat": "",
-    "crontab": "0 0-23 * * *",
-    "once": false,
-    "x": 390,
-    "y": 1280,
-    "wires": [
-      [
-        "ac37f1b9.07775"
-      ]
-    ]
-  },
-  {
-    "id": "6806008e.edb34",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "auto ON morgon",
-    "payload": "1",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "00 07 * * 1,2,3,4,5",
-    "once": false,
-    "x": 160,
-    "y": 720,
-    "wires": [
-      [
-        "b34af797.8c3fb8"
-      ]
-    ]
-  },
-  {
-    "id": "abc768af.bdb498",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "auto OFF morgon",
-    "payload": "0",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "30 08 * * 1,2,3,4,5",
-    "once": false,
-    "x": 160,
-    "y": 660,
-    "wires": [
-      [
-        "4359d2bf.0cb07c"
-      ]
-    ]
-  },
-  {
-    "id": "898e024a.bb74",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "auto OFF",
-    "payload": "0",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 224,
-    "y": 1031,
-    "wires": [
-      [
-        "e617e745.b2acc8",
-        "ad6993e2.333e5",
-        "c9045fb9.e8b6c",
-        "bc88c06c.06b7a",
-        "111d59a3.5e0266",
-        "806d6dbc.9278d",
-        "e5fff7f.0318b08",
-        "d785029d.a94ba"
-      ]
-    ]
-  },
-  {
-    "id": "6aa22675.a25148",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "BUGG golvlampa...",
-    "func": "if(global.get(\"ledStatusVardagsrum2\") === \"0\"){\n    msg.payload = \"1\";\n}\nelse{\n    return null;\n}\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 290,
-    "y": 880,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "d837fc03.e1521",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 100,
-    "y": 880,
-    "wires": [
-      [
-        "6aa22675.a25148"
-      ]
-    ]
-  },
-  {
-    "id": "4359d2bf.0cb07c",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "autotimer",
-    "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 360,
-    "y": 660,
-    "wires": [
-      [
-        "d785029d.a94ba",
-        "e5fff7f.0318b08",
-        "bc88c06c.06b7a",
-        "c9045fb9.e8b6c",
-        "ad6993e2.333e5",
-        "e617e745.b2acc8"
-      ]
-    ]
-  },
-  {
-    "id": "51dc37f0.83f338",
-    "type": "mqtt in",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "autotimer",
-    "qos": "2",
-    "broker": "2d24316e.12544e",
-    "x": 100,
-    "y": 600,
-    "wires": [
-      [
-        "c231cfbd.30a86"
-      ]
-    ]
-  },
-  {
-    "id": "c231cfbd.30a86",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "autotimer",
-    "func": "global.set(\"newAutotimerStatus\",msg.payload);\n\nif(global.get(\"autotimerStatus\") != global.get(\"newAutotimerStatus\")){\n    global.set(\"autotimerStatus\",global.get(\"newAutotimerStatus\"));\n    msg.payload = global.get(\"autotimerStatus\");\n}\nelse{\n    msg.payload = global.get(\"autotimerStatus\");\n}\n\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 360,
-    "y": 600,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "b34af797.8c3fb8",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "autotimer",
-    "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 360,
-    "y": 720,
-    "wires": [
-      [
-        "e5fff7f.0318b08",
-        "873d11d2.27653",
-        "44dee912.b7d6e8",
-        "bc88c06c.06b7a",
-        "26bcbd05.1231a2",
-        "e617e745.b2acc8"
-      ]
-    ]
-  },
-  {
-    "id": "8d9623c9.33f2b",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "autotimer",
-    "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 318,
-    "y": 920,
-    "wires": [
-      [
-        "ad6993e2.333e5",
-        "e617e745.b2acc8",
-        "c9045fb9.e8b6c",
-        "bc88c06c.06b7a",
-        "d785029d.a94ba",
-        "e5fff7f.0318b08",
-        "111d59a3.5e0266",
-        "806d6dbc.9278d"
-      ]
-    ]
-  },
-  {
-    "id": "b98a6243.d7978",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "autotimer",
-    "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 400,
-    "y": 820,
-    "wires": [
-      [
-        "44dee912.b7d6e8",
-        "bc88c06c.06b7a",
-        "3f4704d2.845a6c",
-        "111d59a3.5e0266"
-      ]
-    ]
-  },
-  {
-    "id": "9d747651.42a708",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "Validate sunset",
-    "func": "var date = new Date();\nvar hour = date.getHours();\nvar minute = date.getMinutes();\n\nif(hour >= global.get(\"sunsetHour\") && minute >= global.get(\"sunsetMinute\")){\n    msg.payload = \"1\";\n    return msg;\n}\nelse{\n    msg.payload = \"FAIL\";\n    return null;\n}\n\n",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 340,
-    "y": 780,
-    "wires": [
-      [
-        "b98a6243.d7978"
-      ]
-    ]
-  },
-  {
-    "id": "7ff4d39a.c4202c",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "auto ON kväll",
-    "payload": "1",
-    "payloadType": "str",
-    "repeat": "",
-    "crontab": "00 18 * * 1,2,3,4,0",
-    "once": false,
-    "x": 150,
-    "y": 780,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "ccd8baa9.334878",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "repeat": "",
-    "crontab": "00 05 * * *",
-    "once": false,
-    "x": 89,
-    "y": 93,
-    "wires": [
-      [
-        "ac417335.a18c3"
-      ]
-    ]
-  },
-  {
-    "id": "c677042a.bc4658",
-    "type": "simplejs",
-    "z": "98edc158.ad053",
-    "func": "parse-int",
-    "property": "hour",
-    "name": "",
-    "x": 430,
-    "y": 120,
-    "wires": [
-      [
-        "892815f.c7743e8"
-      ]
-    ]
-  },
-  {
-    "id": "892815f.c7743e8",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "sunsetHour",
-    "func": "msg.hour += 12 + 2;\nglobal.set(\"sunsetHour\", msg.hour);\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 670,
-    "y": 120,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "cfd95cc9.9244f",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "sunset",
-    "func": "var sunset = msg.payload.results.sunset;\n\n//msg.payload = sunset.substring(sunset.indexOf(\":\"), 0);\nvar sunsetTime = sunset.substring(sunset.lastIndexOf(\":\"), 0);\nmsg.payload = {\n                \"hour\" : sunsetTime.substring(sunsetTime.indexOf(\":\"), 0),\n                \"minute\" : sunsetTime.substring(0, sunsetTime.indexOf(\":\"))\n               };\nmsg.hour = sunsetTime.substring(sunsetTime.indexOf(\":\"), 0);\nmsg.minute = sunsetTime.substring(sunsetTime.indexOf(\":\")+1);\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 270,
-    "y": 120,
-    "wires": [
-      [
-        "c677042a.bc4658",
-        "63b4b79d.9b0738"
-      ]
-    ]
-  },
-  {
-    "id": "ac417335.a18c3",
-    "type": "http request",
-    "z": "98edc158.ad053",
-    "name": "sunrise-sunset",
-    "method": "GET",
-    "ret": "obj",
-    "url": "https://api.sunrise-sunset.org/json?lat=57.708870&lng=11.974560",
-    "tls": "",
-    "x": 140,
-    "y": 60,
-    "wires": [
-      [
-        "cfd95cc9.9244f",
-        "bf14e1f5.b3af1"
-      ]
-    ]
-  },
-  {
-    "id": "e1dd8c09.bcd3c",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 80,
-    "y": 220,
-    "wires": [
-      [
-        "83224874.73f978"
-      ]
-    ]
-  },
-  {
-    "id": "83224874.73f978",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "curl -k -d \"grant_type=client_credentials\" -H \"Authorization: Basic SGRnNF9teWlSU1B4V0dXY2Q0MlFoOUxMU2NNYTpjcWlCdXJ3cUpkVzh4UWUxM0VrZ3dLNUtMdkVh\" https://api.vasttrafik.se:443/token",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "token",
-    "x": 230,
-    "y": 220,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "3ddfe33e.a4e3cc",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 80,
-    "y": 260,
-    "wires": [
-      [
-        "246aa26.106bb5e"
-      ]
-    ]
-  },
-  {
-    "id": "246aa26.106bb5e",
-    "type": "exec",
-    "z": "98edc158.ad053",
-    "command": "curl -k -d \"grant_type=password&username=jimisho&password=Fifafifa1!\" -H \"Authorization: Basic SGRnNF9teWlSU1B4V0dXY2Q0MlFoOUxMU2NNYTpjcWlCdXJ3cUpkVzh4UWUxM0VrZ3dLNUtMdkVh\" https://api.vasttrafik.se:443/token",
-    "addpay": true,
-    "append": "",
-    "useSpawn": "",
-    "timer": "",
-    "name": "tokengen",
-    "x": 240,
-    "y": 260,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "63b4b79d.9b0738",
-    "type": "simplejs",
-    "z": "98edc158.ad053",
-    "func": "parse-int",
-    "property": "minute",
-    "name": "",
-    "x": 400,
-    "y": 160,
-    "wires": [
-      [
-        "e4fcd428.3c3318"
-      ]
-    ]
-  },
-  {
-    "id": "e4fcd428.3c3318",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "sunsetMinute",
-    "func": "global.set(\"sunsetMinute\", msg.minute);\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 680,
-    "y": 160,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "c5b5e37b.110c6",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "sun",
-    "func": "msg.payload = { \"sunsetHour\": global.get(\"sunsetHour\"),\n                \"sunsetMinute\": global.get(\"sunsetMinute\"),\n                \"sunriseHour\": global.get(\"sunriseHour\"),\n                \"sunriseMinute\": global.get(\"sunriseMinute\")\n};\n\nreturn msg;\n",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 570,
-    "y": 400,
-    "wires": [
-      [
-        "4d60fa8d.b2ebe4"
-      ]
-    ]
-  },
-  {
-    "id": "4d60fa8d.b2ebe4",
-    "type": "mqtt out",
-    "z": "98edc158.ad053",
-    "name": "",
-    "topic": "appConnectSunResponse",
-    "qos": "",
-    "retain": "",
-    "broker": "2d24316e.12544e",
-    "x": 820,
-    "y": 400,
-    "wires": []
-  },
-  {
-    "id": "bf14e1f5.b3af1",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "sunrise",
-    "func": "var sunrise = msg.payload.results.sunrise;\n\nvar sunriseTime = sunrise.substring(sunrise.lastIndexOf(\":\"), 0);\nmsg.payload = {\n                \"hour\" : sunriseTime.substring(sunriseTime.indexOf(\":\"), 0),\n                \"minute\" : sunriseTime.substring(0, sunriseTime.indexOf(\":\"))\n               };\nmsg.hour = sunriseTime.substring(sunriseTime.indexOf(\":\"), 0);\nmsg.minute = sunriseTime.substring(sunriseTime.indexOf(\":\")+1);\nreturn msg;",
-    "outputs": "1",
-    "noerr": 0,
-    "x": 280,
-    "y": 20,
-    "wires": [
-      [
-        "fbaa01e2.8b9ba",
-        "a6aaebc8.b6f978"
-      ]
-    ]
-  },
-  {
-    "id": "a6aaebc8.b6f978",
-    "type": "simplejs",
-    "z": "98edc158.ad053",
-    "func": "parse-int",
-    "property": "minute",
-    "name": "",
-    "x": 400,
-    "y": 60,
-    "wires": [
-      [
-        "b76b27c.c9245d8"
-      ]
-    ]
-  },
-  {
-    "id": "fbaa01e2.8b9ba",
-    "type": "simplejs",
-    "z": "98edc158.ad053",
-    "func": "parse-int",
-    "property": "hour",
-    "name": "",
-    "x": 450,
-    "y": 20,
-    "wires": [
-      [
-        "8ae1af32.c79cf"
-      ]
-    ]
-  },
-  {
-    "id": "b76b27c.c9245d8",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "sunriseMinute",
-    "func": "global.set(\"sunriseMinute\", msg.minute);\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 680,
-    "y": 60,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "8ae1af32.c79cf",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "sunriseHour",
-    "func": "msg.hour += 2;\nglobal.set(\"sunriseHour\", msg.hour);\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 670,
-    "y": 20,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "78bd5d5c.8a0de4",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "tempSensor25Values",
-    "func": "var d = new Date();\nvar date = d.toString();\nvar payload = msg.payload;\nvar indexIn = payload.search(\"id=247\");\nvar indexOut = payload.search(\"id=248\");\nvar inside = payload.substring(indexIn);\nvar outside = payload.substring(indexOut);\nvar insideTextIndex = inside.search(\"temperature=\");\nvar insideText = inside.substring(insideTextIndex+12,insideTextIndex+16);\nvar outsideTextIndex = inside.search(\"temperature=\");\nvar outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+16);\nvar humidityTextIndex = inside.search(\"humidity=\");\nvar humidityText = inside.substring(humidityTextIndex+9,humidityTextIndex+11);\n\nif(insideText.substr(insideText.length - 1) == \"\\t\"){\n    insideText = inside.substring(insideTextIndex+12,insideTextIndex+15);\n}\nif(outsideText.substr(outsideText.length - 1) == \"\\t\"){\n    outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+15);\n}\n\nvar insideFloat = parseFloat(insideText);\nvar outsideFloat = parseFloat(outsideText);\nvar humidityFloat = parseFloat(humidityText);\nglobal.set(\"date\",date);\nglobal.set(\"insideFloat\",insideFloat);\nglobal.set(\"outsideFloat\",outsideFloat);\nglobal.set(\"humidityFloat\",humidityFloat);\n\nvar insideQueue25 = global.get(\"insideQueue25\");\ninsideQueue25.push(insideFloat);\nglobal.set(\"insideQueue25\",insideQueue25);\nvar outsideQueue25 = global.get(\"outsideQueue25\");\noutsideQueue25.push(outsideFloat);\nglobal.set(\"outsideQueue25\",outsideQueue25);\nvar humidityQueue25 = global.get(\"humidityQueue25\");\nhumidityQueue25.push(humidityFloat);\nglobal.set(\"humidityQueue25\",humidityQueue25);\nvar timeQueue25 = global.get(\"timeQueue25\");\ntimeQueue25.push(date);\nglobal.set(\"timeQueue25\",timeQueue25);\n\n// 1008 = 7days\nif(insideQueue25.length > 25){\n    insideQueue25.shift();\n}\nif(outsideQueue25.length > 25){\n    outsideQueue25.shift();\n}\nif(humidityQueue25.length > 25){\n    humidityQueue25.shift();\n}\nif(timeQueue25.length > 25){\n    timeQueue25.shift();\n}\n\nmsg.payload = { \"date\": global.get(\"date\"),\n                \"inside\": global.get(\"insideFloat\"),\n                \"outside\": global.get(\"outsideFloat\"),\n                \"humidity\": global.get(\"humidityFloat\"),\n                \"insideQueue25\": global.get(\"insideQueue25\"),\n                \"outsideQueue25\": global.get(\"outsideQueue25\"),\n                \"humidityQueue25\": global.get(\"humidityQueue25\"),\n                \"timeQueue25\": global.get(\"timeQueue25\"),\n                };\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 580,
-    "y": 1340,
-    "wires": [
-      [
-        "4439ade6.43add4"
-      ]
-    ]
-  },
-  {
-    "id": "d2bb7bc8.d9e638",
-    "type": "function",
-    "z": "98edc158.ad053",
-    "name": "globals25",
-    "func": "var insideQueue25 = [];\nglobal.set(\"insideQueue25\",insideQueue25);\nvar outsideQueue25 = [];\nglobal.set(\"outsideQueue25\",outsideQueue25);\nvar humidityQueue25 = [];\nglobal.set(\"humidityQueue25\",humidityQueue25);\nvar timeQueue25 = [];\nglobal.set(\"timeQueue25\",timeQueue25);\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "x": 580,
-    "y": 1440,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "f3f821c4.5f54f",
-    "type": "inject",
-    "z": "98edc158.ad053",
-    "name": "reset queues",
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "x": 430,
-    "y": 1440,
-    "wires": [
-      [
-        "d2bb7bc8.d9e638"
-      ]
-    ]
-  },
-  {
-    "id": "2d24316e.12544e",
-    "type": "mqtt-broker",
-    "z": "",
-    "broker": "m20.cloudmqtt.com",
-    "port": "13497",
-    "clientid": "client12345",
-    "usetls": false,
-    "compatmode": true,
-    "keepalive": "60",
-    "cleansession": true,
-    "willTopic": "",
-    "willQos": "0",
-    "willPayload": "",
-    "birthTopic": "",
-    "birthQos": "0",
-    "birthPayload": ""
-  },
-  {
-    "id": "253ab5f4.36337a",
-    "type": "postgresdb",
-    "z": "",
-    "hostname": "localhost",
-    "port": "5432",
-    "db": "shpdb",
-    "ssl": false
-  }
+    {
+        "id": "691526f4.60b108",
+        "type": "mqtt in",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "vardagsrum",
+        "qos": "2",
+        "broker": "2d24316e.12544e",
+        "x": 526,
+        "y": 772,
+        "wires": [
+            [
+                "111d59a3.5e0266",
+                "ed118ad6.690b48"
+            ]
+        ]
+    },
+    {
+        "id": "111d59a3.5e0266",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "ledVardagsrum",
+        "func": "global.set(\"newledStatusVardagsrum\",msg.payload);\n\nif(global.get(\"ledStatusVardagsrum\") != global.get(\"newledStatusVardagsrum\")){\n    global.set(\"ledStatusVardagsrum\",global.get(\"newledStatusVardagsrum\"));\n    msg.payload = global.get(\"ledStatusVardagsrum\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusVardagsrum\");\n}\n\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 721,
+        "y": 806,
+        "wires": [
+            [
+                "97a498e8.852618"
+            ]
+        ]
+    },
+    {
+        "id": "ea72a107.a4db9",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "led",
+        "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\"),\n                \"autotimer\": global.get(\"autotimerStatus\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 453,
+        "y": 399,
+        "wires": [
+            [
+                "f75adf1.b253f2"
+            ]
+        ]
+    },
+    {
+        "id": "f0b78c2a.38daf",
+        "type": "mqtt in",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "appConnect",
+        "qos": "2",
+        "broker": "2d24316e.12544e",
+        "x": 273,
+        "y": 399,
+        "wires": [
+            [
+                "ea72a107.a4db9",
+                "c5b5e37b.110c6",
+                "6dc41675.6d9ba8"
+            ]
+        ]
+    },
+    {
+        "id": "f75adf1.b253f2",
+        "type": "mqtt out",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "appConnectLEDResponse",
+        "qos": "",
+        "retain": "",
+        "broker": "2d24316e.12544e",
+        "x": 703,
+        "y": 399,
+        "wires": []
+    },
+    {
+        "id": "3f4704d2.845a6c",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --on 333",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "on",
+        "x": 803,
+        "y": 709,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "806d6dbc.9278d",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --off 333",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "off",
+        "x": 803,
+        "y": 749,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ed118ad6.690b48",
+        "type": "switch",
+        "z": "98edc158.ad053",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 566,
+        "y": 712,
+        "wires": [
+            [
+                "3f4704d2.845a6c"
+            ],
+            [
+                "806d6dbc.9278d"
+            ]
+        ]
+    },
+    {
+        "id": "47f84844.f25b58",
+        "type": "mqtt in",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "sovrum",
+        "qos": "2",
+        "broker": "2d24316e.12544e",
+        "x": 506,
+        "y": 912,
+        "wires": [
+            [
+                "bc88c06c.06b7a",
+                "1ee62e73.c0b302"
+            ]
+        ]
+    },
+    {
+        "id": "1ee62e73.c0b302",
+        "type": "switch",
+        "z": "98edc158.ad053",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 566,
+        "y": 852,
+        "wires": [
+            [
+                "44dee912.b7d6e8"
+            ],
+            [
+                "c9045fb9.e8b6c"
+            ]
+        ]
+    },
+    {
+        "id": "44dee912.b7d6e8",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --on 111",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "on",
+        "x": 803,
+        "y": 849,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c9045fb9.e8b6c",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --off 111",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "off",
+        "x": 803,
+        "y": 889,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "bc88c06c.06b7a",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "ledSovrum",
+        "func": "global.set(\"newledStatusSovrum\",msg.payload);\n\nif(global.get(\"ledStatusSovrum\") != global.get(\"newledStatusSovrum\")){\n    global.set(\"ledStatusSovrum\",global.get(\"newledStatusSovrum\"));\n    msg.payload = global.get(\"ledStatusSovrum\");\n}\n\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 803,
+        "y": 929,
+        "wires": [
+            [
+                "97a498e8.852618"
+            ]
+        ]
+    },
+    {
+        "id": "cf36b351.c5cdd",
+        "type": "mqtt in",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "gastrum",
+        "qos": "2",
+        "broker": "2d24316e.12544e",
+        "x": 534,
+        "y": 653,
+        "wires": [
+            [
+                "4354c865.fcdb68",
+                "e5fff7f.0318b08"
+            ]
+        ]
+    },
+    {
+        "id": "4354c865.fcdb68",
+        "type": "switch",
+        "z": "98edc158.ad053",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 564,
+        "y": 593,
+        "wires": [
+            [
+                "873d11d2.27653"
+            ],
+            [
+                "d785029d.a94ba"
+            ]
+        ]
+    },
+    {
+        "id": "873d11d2.27653",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --on 222",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "on",
+        "x": 724,
+        "y": 573,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d785029d.a94ba",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --off 222",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "off",
+        "x": 724,
+        "y": 613,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e5fff7f.0318b08",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "ledGastrum",
+        "func": "global.set(\"newledStatusGastrum\",msg.payload);\n\nif(global.get(\"ledStatusGastrum\") != global.get(\"newledStatusGastrum\")){\n    global.set(\"ledStatusGastrum\",global.get(\"newledStatusGastrum\"));\n    msg.payload = global.get(\"ledStatusGastrum\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusGastrum\");\n}\n\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 726,
+        "y": 659,
+        "wires": [
+            [
+                "97a498e8.852618"
+            ]
+        ]
+    },
+    {
+        "id": "8ead34cb.7c98a8",
+        "type": "mqtt out",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "liveUpdateLeds",
+        "qos": "",
+        "retain": "",
+        "broker": "2d24316e.12544e",
+        "x": 1048,
+        "y": 737,
+        "wires": []
+    },
+    {
+        "id": "97a498e8.852618",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "liveUpdateLeds",
+        "func": "msg.payload = { \"ledVardagsrum\": global.get(\"ledStatusVardagsrum\"),\n                \"ledVardagsrum2\": global.get(\"ledStatusVardagsrum2\"),\n                \"ledGastrum\": global.get(\"ledStatusGastrum\"),\n                \"ledSovrum\": global.get(\"ledStatusSovrum\")\n};\n\n//msg.payload = global.get(\"ledStatusVardagsrum\");\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 976,
+        "y": 812,
+        "wires": [
+            [
+                "8ead34cb.7c98a8"
+            ]
+        ]
+    },
+    {
+        "id": "ac37f1b9.07775",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --list-sensors",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "sensors",
+        "x": 600,
+        "y": 1280,
+        "wires": [
+            [
+                "476c2ccb.ae5564",
+                "78bd5d5c.8a0de4"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4439ade6.43add4",
+        "type": "mqtt out",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "tempSensor",
+        "qos": "",
+        "retain": "",
+        "broker": "2d24316e.12544e",
+        "x": 1030,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "3f6b41fc.17481e",
+        "type": "mqtt in",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "vardagsrum2",
+        "qos": "2",
+        "broker": "2d24316e.12544e",
+        "x": 526,
+        "y": 1072,
+        "wires": [
+            [
+                "e617e745.b2acc8",
+                "ff483309.51b06"
+            ]
+        ]
+    },
+    {
+        "id": "e617e745.b2acc8",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "ledVardagsrum2Golvlampa",
+        "func": "global.set(\"newledStatusVardagsrum2\",msg.payload);\n\nif(global.get(\"ledStatusVardagsrum2\") != global.get(\"newledStatusVardagsrum2\")){\n    global.set(\"ledStatusVardagsrum2\",global.get(\"newledStatusVardagsrum2\"));\n    msg.payload = global.get(\"ledStatusVardagsrum2\");\n}\nelse{\n    msg.payload = global.get(\"ledStatusVardagsrum2\");\n}\n\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 833,
+        "y": 1069,
+        "wires": [
+            [
+                "97a498e8.852618"
+            ]
+        ]
+    },
+    {
+        "id": "26bcbd05.1231a2",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --on 444",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "on",
+        "x": 803,
+        "y": 989,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ad6993e2.333e5",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --off 444",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "off",
+        "x": 803,
+        "y": 1029,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ff483309.51b06",
+        "type": "switch",
+        "z": "98edc158.ad053",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 566,
+        "y": 1012,
+        "wires": [
+            [
+                "26bcbd05.1231a2"
+            ],
+            [
+                "ad6993e2.333e5"
+            ]
+        ]
+    },
+    {
+        "id": "983c920f.050d5",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --on 444",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "on",
+        "x": 590,
+        "y": 1140,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6bf54dcf.022e74",
+        "type": "mqtt in",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "vardagsrum2Dim",
+        "qos": "2",
+        "broker": "2d24316e.12544e",
+        "x": 400,
+        "y": 1140,
+        "wires": [
+            [
+                "983c920f.050d5"
+            ]
+        ]
+    },
+    {
+        "id": "410df9e4.58f7f8",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "auto OFF kväll",
+        "payload": "0",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "00 22 * * 1,2,3,4,0",
+        "once": false,
+        "x": 141,
+        "y": 920,
+        "wires": [
+            [
+                "8d9623c9.33f2b"
+            ]
+        ]
+    },
+    {
+        "id": "5d406d56.6d9c34",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "auto ON kväll polling",
+        "payload": "1",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "*/1 15-21 * * *",
+        "once": false,
+        "x": 130,
+        "y": 820,
+        "wires": [
+            [
+                "9d747651.42a708"
+            ]
+        ]
+    },
+    {
+        "id": "5ac06d75.0a0184",
+        "type": "mqtt out",
+        "z": "98edc158.ad053",
+        "name": "appConnectTempResponse",
+        "topic": "appConnectTempResponse",
+        "qos": "",
+        "retain": "",
+        "broker": "2d24316e.12544e",
+        "x": 700,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "476c2ccb.ae5564",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "tempSensorALLValues",
+        "func": "var d = new Date();\nvar date = d.toString();\nvar payload = msg.payload;\nvar indexIn = payload.search(\"id=247\");\nvar indexOut = payload.search(\"id=248\");\nvar inside = payload.substring(indexIn);\nvar outside = payload.substring(indexOut);\nvar insideTextIndex = inside.search(\"temperature=\");\nvar insideText = inside.substring(insideTextIndex+12,insideTextIndex+16);\nvar outsideTextIndex = inside.search(\"temperature=\");\nvar outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+16);\nvar humidityTextIndex = inside.search(\"humidity=\");\nvar humidityText = inside.substring(humidityTextIndex+9,humidityTextIndex+11);\n\nif(insideText.substr(insideText.length - 1) == \"\\t\"){\n    insideText = inside.substring(insideTextIndex+12,insideTextIndex+15);\n}\nif(outsideText.substr(outsideText.length - 1) == \"\\t\"){\n    outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+15);\n}\n\nvar insideFloat = parseFloat(insideText);\nvar outsideFloat = parseFloat(outsideText);\nvar humidityFloat = parseFloat(humidityText);\nglobal.set(\"date\",date);\nglobal.set(\"insideFloat\",insideFloat);\nglobal.set(\"outsideFloat\",outsideFloat);\nglobal.set(\"humidityFloat\",humidityFloat);\n\nvar insideQueue = global.get(\"insideQueue\");\ninsideQueue.push(insideFloat);\nglobal.set(\"insideQueue\",insideQueue);\nvar outsideQueue = global.get(\"outsideQueue\");\noutsideQueue.push(outsideFloat);\nglobal.set(\"outsideQueue\",outsideQueue);\nvar humidityQueue = global.get(\"humidityQueue\");\nhumidityQueue.push(humidityFloat);\nglobal.set(\"humidityQueue\",humidityQueue);\nvar timeQueue = global.get(\"timeQueue\");\ntimeQueue.push(date);\nglobal.set(\"timeQueue\",timeQueue);\n\n// 1008 = 7days\nif(insideQueue.length > 2016){\n    insideQueue.shift();\n}\nif(outsideQueue.length > 2016){\n    outsideQueue.shift();\n}\nif(humidityQueue.length > 2016){\n    humidityQueue.shift();\n}\nif(timeQueue.length > 2016){\n    timeQueue.shift();\n}\n\nmsg.payload = { \"date\": global.get(\"date\"),\n                \"inside\": global.get(\"insideFloat\"),\n                \"outside\": global.get(\"outsideFloat\"),\n                \"humidity\": global.get(\"humidityFloat\"),\n                \"insideQueue\": global.get(\"insideQueue\"),\n                \"outsideQueue\": global.get(\"outsideQueue\"),\n                \"humidityQueue\": global.get(\"humidityQueue\"),\n                \"timeQueue\": global.get(\"timeQueue\"),\n                };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 820,
+        "y": 1260,
+        "wires": [
+            [
+                "6dc3aea4.e475"
+            ]
+        ]
+    },
+    {
+        "id": "457e26dc.a8aae8",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "globals",
+        "func": "var insideQueue = [];\nglobal.set(\"insideQueue\",insideQueue);\nvar outsideQueue = [];\nglobal.set(\"outsideQueue\",outsideQueue);\nvar humidityQueue = [];\nglobal.set(\"humidityQueue\",humidityQueue);\nvar timeQueue = [];\nglobal.set(\"timeQueue\",timeQueue);\n\nvar insideValNow = \"\";\nglobal.set(\"insideValNow\",insideValNow);\nvar outsideValNow = \"\";\nglobal.set(\"outsideValNow\",outsideValNow);\nvar humidityValNow = \"\";\nglobal.set(\"humidityValNow\",humidityValNow);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 584,
+        "y": 1391,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8b9ea07f.19862",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "reset queues",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 434,
+        "y": 1391,
+        "wires": [
+            [
+                "457e26dc.a8aae8"
+            ]
+        ]
+    },
+    {
+        "id": "12f2bf7d.ac6621",
+        "type": "template",
+        "z": "98edc158.ad053",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "select * from tempTable where timeQueue = 'Sun Feb 19 2017 03:28:02 GMT+0100 (CET)';",
+        "x": 590,
+        "y": 1560,
+        "wires": [
+            [
+                "e0c9b4d5.546cd8"
+            ]
+        ]
+    },
+    {
+        "id": "e0c9b4d5.546cd8",
+        "type": "postgres",
+        "z": "98edc158.ad053",
+        "postgresdb": "253ab5f4.36337a",
+        "name": "",
+        "output": true,
+        "outputs": 1,
+        "x": 760,
+        "y": 1560,
+        "wires": [
+            [
+                "754977ad.a2b1c8"
+            ]
+        ]
+    },
+    {
+        "id": "794e0d89.861df4",
+        "type": "debug",
+        "z": "98edc158.ad053",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1050,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "bcb6c7d5.d28da8",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "select all",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 440,
+        "y": 1560,
+        "wires": [
+            [
+                "12f2bf7d.ac6621"
+            ]
+        ]
+    },
+    {
+        "id": "ec54e63c.a61018",
+        "type": "file",
+        "z": "98edc158.ad053",
+        "name": "",
+        "filename": "/home/pi/tempsensorfile",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "x": 990,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "6dc3aea4.e475",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "queueCheck",
+        "func": "var check = global.get(\"insideQueue\");\n\nif(check.length < 1000){\n    msg.payload = \"FAIL: \"+check.length;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 1320,
+        "wires": [
+            [
+                "d21cd478.bf1ce8"
+            ]
+        ]
+    },
+    {
+        "id": "d21cd478.bf1ce8",
+        "type": "switch",
+        "z": "98edc158.ad053",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "FAIL",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 950,
+        "y": 1320,
+        "wires": [
+            [],
+            [
+                "ec54e63c.a61018"
+            ]
+        ]
+    },
+    {
+        "id": "754977ad.a2b1c8",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 890,
+        "y": 1560,
+        "wires": [
+            [
+                "794e0d89.861df4"
+            ]
+        ]
+    },
+    {
+        "id": "6a95addb.bb0c14",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "read temp sensor",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "0 0-23 * * *",
+        "once": false,
+        "x": 390,
+        "y": 1280,
+        "wires": [
+            [
+                "ac37f1b9.07775"
+            ]
+        ]
+    },
+    {
+        "id": "6806008e.edb34",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "auto ON morgon",
+        "payload": "1",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "00 07 * * 1,2,3,4,5",
+        "once": false,
+        "x": 160,
+        "y": 720,
+        "wires": [
+            [
+                "b34af797.8c3fb8"
+            ]
+        ]
+    },
+    {
+        "id": "abc768af.bdb498",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "auto OFF morgon",
+        "payload": "0",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "30 08 * * 1,2,3,4,5",
+        "once": false,
+        "x": 160,
+        "y": 660,
+        "wires": [
+            [
+                "4359d2bf.0cb07c"
+            ]
+        ]
+    },
+    {
+        "id": "898e024a.bb74",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "auto OFF",
+        "payload": "0",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 224,
+        "y": 1031,
+        "wires": [
+            [
+                "e617e745.b2acc8",
+                "ad6993e2.333e5",
+                "c9045fb9.e8b6c",
+                "bc88c06c.06b7a",
+                "111d59a3.5e0266",
+                "806d6dbc.9278d",
+                "e5fff7f.0318b08",
+                "d785029d.a94ba"
+            ]
+        ]
+    },
+    {
+        "id": "6aa22675.a25148",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "BUGG golvlampa...",
+        "func": "if(global.get(\"ledStatusVardagsrum2\") === \"0\"){\n    msg.payload = \"1\";\n}\nelse{\n    return null;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 290,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d837fc03.e1521",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 100,
+        "y": 880,
+        "wires": [
+            [
+                "6aa22675.a25148"
+            ]
+        ]
+    },
+    {
+        "id": "4359d2bf.0cb07c",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 360,
+        "y": 660,
+        "wires": [
+            [
+                "d785029d.a94ba",
+                "e5fff7f.0318b08",
+                "bc88c06c.06b7a",
+                "c9045fb9.e8b6c",
+                "ad6993e2.333e5",
+                "e617e745.b2acc8"
+            ]
+        ]
+    },
+    {
+        "id": "51dc37f0.83f338",
+        "type": "mqtt in",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "autotimer",
+        "qos": "2",
+        "broker": "2d24316e.12544e",
+        "x": 100,
+        "y": 600,
+        "wires": [
+            [
+                "c231cfbd.30a86"
+            ]
+        ]
+    },
+    {
+        "id": "c231cfbd.30a86",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "global.set(\"newAutotimerStatus\",msg.payload);\n\nif(global.get(\"autotimerStatus\") != global.get(\"newAutotimerStatus\")){\n    global.set(\"autotimerStatus\",global.get(\"newAutotimerStatus\"));\n    msg.payload = global.get(\"autotimerStatus\");\n}\nelse{\n    msg.payload = global.get(\"autotimerStatus\");\n}\n\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 360,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b34af797.8c3fb8",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 360,
+        "y": 720,
+        "wires": [
+            [
+                "e5fff7f.0318b08",
+                "873d11d2.27653",
+                "44dee912.b7d6e8",
+                "bc88c06c.06b7a",
+                "26bcbd05.1231a2",
+                "e617e745.b2acc8"
+            ]
+        ]
+    },
+    {
+        "id": "8d9623c9.33f2b",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 318,
+        "y": 920,
+        "wires": [
+            [
+                "ad6993e2.333e5",
+                "e617e745.b2acc8",
+                "c9045fb9.e8b6c",
+                "bc88c06c.06b7a",
+                "d785029d.a94ba",
+                "e5fff7f.0318b08",
+                "111d59a3.5e0266",
+                "806d6dbc.9278d"
+            ]
+        ]
+    },
+    {
+        "id": "b98a6243.d7978",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "autotimer",
+        "func": "\nif(global.get(\"autotimerStatus\") == \"1\"){\n    return msg;\n}\nelse{\n    msg.payload=\"1\";\n    return null;\n}",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 400,
+        "y": 820,
+        "wires": [
+            [
+                "44dee912.b7d6e8",
+                "bc88c06c.06b7a",
+                "3f4704d2.845a6c",
+                "111d59a3.5e0266"
+            ]
+        ]
+    },
+    {
+        "id": "7ff4d39a.c4202c",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "auto ON kväll",
+        "payload": "1",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "00 20 * * 1,2,3,4,0",
+        "once": false,
+        "x": 150,
+        "y": 780,
+        "wires": [
+            [
+                "b98a6243.d7978"
+            ]
+        ]
+    },
+    {
+        "id": "ccd8baa9.334878",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "00 05 * * *",
+        "once": false,
+        "x": 89,
+        "y": 93,
+        "wires": [
+            [
+                "ac417335.a18c3"
+            ]
+        ]
+    },
+    {
+        "id": "c677042a.bc4658",
+        "type": "simplejs",
+        "z": "98edc158.ad053",
+        "func": "parse-int",
+        "property": "hour",
+        "name": "",
+        "x": 430,
+        "y": 120,
+        "wires": [
+            [
+                "892815f.c7743e8"
+            ]
+        ]
+    },
+    {
+        "id": "892815f.c7743e8",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "sunsetHour",
+        "func": "msg.hour += 12 + 2;\nglobal.set(\"sunsetHour\", msg.hour);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 670,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cfd95cc9.9244f",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "sunset",
+        "func": "var sunset = msg.payload.results.sunset;\n\n//msg.payload = sunset.substring(sunset.indexOf(\":\"), 0);\nvar sunsetTime = sunset.substring(sunset.lastIndexOf(\":\"), 0);\nmsg.payload = {\n                \"hour\" : sunsetTime.substring(sunsetTime.indexOf(\":\"), 0),\n                \"minute\" : sunsetTime.substring(0, sunsetTime.indexOf(\":\"))\n               };\nmsg.hour = sunsetTime.substring(sunsetTime.indexOf(\":\"), 0);\nmsg.minute = sunsetTime.substring(sunsetTime.indexOf(\":\")+1);\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 270,
+        "y": 120,
+        "wires": [
+            [
+                "c677042a.bc4658",
+                "63b4b79d.9b0738"
+            ]
+        ]
+    },
+    {
+        "id": "ac417335.a18c3",
+        "type": "http request",
+        "z": "98edc158.ad053",
+        "name": "sunrise-sunset",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://api.sunrise-sunset.org/json?lat=57.708870&lng=11.974560",
+        "tls": "",
+        "x": 140,
+        "y": 60,
+        "wires": [
+            [
+                "cfd95cc9.9244f",
+                "bf14e1f5.b3af1"
+            ]
+        ]
+    },
+    {
+        "id": "e1dd8c09.bcd3c",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 80,
+        "y": 220,
+        "wires": [
+            [
+                "83224874.73f978"
+            ]
+        ]
+    },
+    {
+        "id": "83224874.73f978",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "curl -k -d \"grant_type=client_credentials\" -H \"Authorization: Basic SGRnNF9teWlSU1B4V0dXY2Q0MlFoOUxMU2NNYTpjcWlCdXJ3cUpkVzh4UWUxM0VrZ3dLNUtMdkVh\" https://api.vasttrafik.se:443/token",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "token",
+        "x": 230,
+        "y": 220,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "3ddfe33e.a4e3cc",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 80,
+        "y": 260,
+        "wires": [
+            [
+                "246aa26.106bb5e"
+            ]
+        ]
+    },
+    {
+        "id": "246aa26.106bb5e",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "curl -k -d \"grant_type=password&username=jimisho&password=Fifafifa1!\" -H \"Authorization: Basic SGRnNF9teWlSU1B4V0dXY2Q0MlFoOUxMU2NNYTpjcWlCdXJ3cUpkVzh4UWUxM0VrZ3dLNUtMdkVh\" https://api.vasttrafik.se:443/token",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "tokengen",
+        "x": 240,
+        "y": 260,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "63b4b79d.9b0738",
+        "type": "simplejs",
+        "z": "98edc158.ad053",
+        "func": "parse-int",
+        "property": "minute",
+        "name": "",
+        "x": 400,
+        "y": 160,
+        "wires": [
+            [
+                "e4fcd428.3c3318"
+            ]
+        ]
+    },
+    {
+        "id": "e4fcd428.3c3318",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "sunsetMinute",
+        "func": "global.set(\"sunsetMinute\", msg.minute);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 680,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c5b5e37b.110c6",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "sun",
+        "func": "msg.payload = { \"sunsetHour\": global.get(\"sunsetHour\"),\n                \"sunsetMinute\": global.get(\"sunsetMinute\"),\n                \"sunriseHour\": global.get(\"sunriseHour\"),\n                \"sunriseMinute\": global.get(\"sunriseMinute\")\n};\n\nreturn msg;\n",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 453,
+        "y": 359,
+        "wires": [
+            [
+                "4d60fa8d.b2ebe4"
+            ]
+        ]
+    },
+    {
+        "id": "4d60fa8d.b2ebe4",
+        "type": "mqtt out",
+        "z": "98edc158.ad053",
+        "name": "",
+        "topic": "appConnectSunResponse",
+        "qos": "",
+        "retain": "",
+        "broker": "2d24316e.12544e",
+        "x": 703,
+        "y": 359,
+        "wires": []
+    },
+    {
+        "id": "bf14e1f5.b3af1",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "sunrise",
+        "func": "var sunrise = msg.payload.results.sunrise;\n\nvar sunriseTime = sunrise.substring(sunrise.lastIndexOf(\":\"), 0);\nmsg.payload = {\n                \"hour\" : sunriseTime.substring(sunriseTime.indexOf(\":\"), 0),\n                \"minute\" : sunriseTime.substring(0, sunriseTime.indexOf(\":\"))\n               };\nmsg.hour = sunriseTime.substring(sunriseTime.indexOf(\":\"), 0);\nmsg.minute = sunriseTime.substring(sunriseTime.indexOf(\":\")+1);\nreturn msg;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 280,
+        "y": 20,
+        "wires": [
+            [
+                "fbaa01e2.8b9ba",
+                "a6aaebc8.b6f978"
+            ]
+        ]
+    },
+    {
+        "id": "a6aaebc8.b6f978",
+        "type": "simplejs",
+        "z": "98edc158.ad053",
+        "func": "parse-int",
+        "property": "minute",
+        "name": "",
+        "x": 400,
+        "y": 60,
+        "wires": [
+            [
+                "b76b27c.c9245d8"
+            ]
+        ]
+    },
+    {
+        "id": "fbaa01e2.8b9ba",
+        "type": "simplejs",
+        "z": "98edc158.ad053",
+        "func": "parse-int",
+        "property": "hour",
+        "name": "",
+        "x": 450,
+        "y": 20,
+        "wires": [
+            [
+                "8ae1af32.c79cf"
+            ]
+        ]
+    },
+    {
+        "id": "b76b27c.c9245d8",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "sunriseMinute",
+        "func": "global.set(\"sunriseMinute\", msg.minute);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 680,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8ae1af32.c79cf",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "sunriseHour",
+        "func": "msg.hour += 2;\nglobal.set(\"sunriseHour\", msg.hour);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 670,
+        "y": 20,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "78bd5d5c.8a0de4",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "tempSensor25Values",
+        "func": "var d = new Date();\nvar date = d.toString();\nvar payload = msg.payload;\nvar indexIn = payload.search(\"id=247\");\nvar indexOut = payload.search(\"id=248\");\nvar inside = payload.substring(indexIn);\nvar outside = payload.substring(indexOut);\nvar insideTextIndex = inside.search(\"temperature=\");\nvar insideText = inside.substring(insideTextIndex+12,insideTextIndex+16);\nvar outsideTextIndex = inside.search(\"temperature=\");\nvar outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+16);\nvar humidityTextIndex = inside.search(\"humidity=\");\nvar humidityText = inside.substring(humidityTextIndex+9,humidityTextIndex+11);\n\nif(insideText.substr(insideText.length - 1) == \"\\t\"){\n    insideText = inside.substring(insideTextIndex+12,insideTextIndex+15);\n}\nif(outsideText.substr(outsideText.length - 1) == \"\\t\"){\n    outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+15);\n}\n\nvar insideFloat = parseFloat(insideText);\nvar outsideFloat = parseFloat(outsideText);\nvar humidityFloat = parseFloat(humidityText);\nglobal.set(\"date\",date);\nglobal.set(\"insideFloat\",insideFloat);\nglobal.set(\"outsideFloat\",outsideFloat);\nglobal.set(\"humidityFloat\",humidityFloat);\n\nvar insideQueue25 = global.get(\"insideQueue25\");\ninsideQueue25.push(insideFloat);\nglobal.set(\"insideQueue25\",insideQueue25);\nvar outsideQueue25 = global.get(\"outsideQueue25\");\noutsideQueue25.push(outsideFloat);\nglobal.set(\"outsideQueue25\",outsideQueue25);\nvar humidityQueue25 = global.get(\"humidityQueue25\");\nhumidityQueue25.push(humidityFloat);\nglobal.set(\"humidityQueue25\",humidityQueue25);\nvar timeQueue25 = global.get(\"timeQueue25\");\ntimeQueue25.push(date);\nglobal.set(\"timeQueue25\",timeQueue25);\n\n// 1008 = 7days\nif(insideQueue25.length > 25){\n    insideQueue25.shift();\n}\nif(outsideQueue25.length > 25){\n    outsideQueue25.shift();\n}\nif(humidityQueue25.length > 25){\n    humidityQueue25.shift();\n}\nif(timeQueue25.length > 25){\n    timeQueue25.shift();\n}\n\nmsg.payload = { \"date\": global.get(\"date\"),\n                \"inside\": global.get(\"insideFloat\"),\n                \"outside\": global.get(\"outsideFloat\"),\n                \"humidity\": global.get(\"humidityFloat\"),\n                \"insideQueue25\": global.get(\"insideQueue25\"),\n                \"outsideQueue25\": global.get(\"outsideQueue25\"),\n                \"humidityQueue25\": global.get(\"humidityQueue25\"),\n                \"timeQueue25\": global.get(\"timeQueue25\"),\n                };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 1340,
+        "wires": [
+            [
+                "4439ade6.43add4"
+            ]
+        ]
+    },
+    {
+        "id": "d2bb7bc8.d9e638",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "globals25",
+        "func": "var insideQueue25 = [];\nglobal.set(\"insideQueue25\",insideQueue25);\nvar outsideQueue25 = [];\nglobal.set(\"outsideQueue25\",outsideQueue25);\nvar humidityQueue25 = [];\nglobal.set(\"humidityQueue25\",humidityQueue25);\nvar timeQueue25 = [];\nglobal.set(\"timeQueue25\",timeQueue25);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 1440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f3f821c4.5f54f",
+        "type": "inject",
+        "z": "98edc158.ad053",
+        "name": "reset queues",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 430,
+        "y": 1440,
+        "wires": [
+            [
+                "d2bb7bc8.d9e638"
+            ]
+        ]
+    },
+    {
+        "id": "9d747651.42a708",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "Validate sunset",
+        "func": "var date = new Date();\nvar hour = date.getHours();\nvar minute = date.getMinutes();\n\nif(hour >= global.get(\"sunsetHour\") && minute >= global.get(\"sunsetMinute\")){\n    msg.payload = \"1\";\n    return msg;\n}\nelse{\n    msg.payload = \"FAIL\";\n    return null;\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6dc41675.6d9ba8",
+        "type": "exec",
+        "z": "98edc158.ad053",
+        "command": "tdtool --list-sensors",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "sensors",
+        "x": 420,
+        "y": 480,
+        "wires": [
+            [
+                "2d12d433.93289c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2d12d433.93289c",
+        "type": "function",
+        "z": "98edc158.ad053",
+        "name": "temp",
+        "func": "\nvar payload = msg.payload;\nvar indexIn = payload.search(\"id=247\");\nvar indexOut = payload.search(\"id=248\");\nvar inside = payload.substring(indexIn);\nvar outside = payload.substring(indexOut);\nvar insideTextIndex = inside.search(\"temperature=\");\nvar insideText = inside.substring(insideTextIndex+12,insideTextIndex+16);\nvar outsideTextIndex = inside.search(\"temperature=\");\nvar outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+16);\nvar humidityTextIndex = inside.search(\"humidity=\");\nvar humidityText = inside.substring(humidityTextIndex+9,humidityTextIndex+11);\n\nif(insideText.substr(insideText.length - 1) == \"\\t\"){\n    insideText = inside.substring(insideTextIndex+12,insideTextIndex+15);\n}\nif(outsideText.substr(outsideText.length - 1) == \"\\t\"){\n    outsideText = outside.substring(outsideTextIndex+12,outsideTextIndex+15);\n}\n\nvar insideValNow = parseFloat(insideText);\nvar outsideValNow = parseFloat(outsideText);\nvar humidityValNow = parseFloat(humidityText);\nglobal.set(\"insideValNow\",insideValNow);\nglobal.set(\"outsideValNow\",outsideValNow);\nglobal.set(\"humidityValNow\",humidityValNow);\n\nmsg.payload = { \"date\": global.get(\"date\"),\n                \"inside\": global.get(\"insideFloat\"),\n                \"outside\": global.get(\"outsideFloat\"),\n                \"humidity\": global.get(\"humidityFloat\"),\n                \"insideQueue\": global.get(\"insideQueue\"),\n                \"outsideQueue\": global.get(\"outsideQueue\"),\n                \"humidityQueue\": global.get(\"humidityQueue\"),\n                \"insideValNow\": global.get(\"insideValNow\"),\n                \"outsideValNow\": global.get(\"outsideValNow\"),\n                \"humidityValNow\": global.get(\"humidityValNow\")\n            };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 440,
+        "wires": [
+            [
+                "5ac06d75.0a0184"
+            ]
+        ]
+    },
+    {
+        "id": "2d24316e.12544e",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "m20.cloudmqtt.com",
+        "port": "13497",
+        "clientid": "client12345",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "253ab5f4.36337a",
+        "type": "postgresdb",
+        "z": "",
+        "hostname": "localhost",
+        "port": "5432",
+        "db": "shpdb",
+        "ssl": false
+    }
 ]
